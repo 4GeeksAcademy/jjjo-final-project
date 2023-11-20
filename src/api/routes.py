@@ -20,3 +20,46 @@ def handle_hello():
     }
 
     return jsonify(response_body), 200
+
+@api.route('/usuarios', methods=['GET'])
+def get_users_list():
+    users = User.query.all()
+    user_list = []
+    for item in users:
+        user_list.append(item.serialize())
+    return jsonify(user_list), 200 
+
+@api.route('/registro', methods=['POST'])
+def signup():
+    body = request.json
+    username = body.get("username")
+    email = body.get("email")
+    password = body.get("password")
+    is_active = body.get("is_active")
+
+    if username is None or email is None or password is None:
+        return jsonify({"Message":"Se deben llenar todos los datos para continuar"}), 400
+    
+    check_username = User.query.filter_by(username = username).first()
+
+    if check_username is not None:
+        return jsonify({"Message":"Este nombre de usurio ya esta en uso"})
+    
+    check_email =  User.query.filter_by(email=email).first()
+
+    if check_email is not None:
+        return jsonify({"Message":"Esta direccion de correo ya esta en uso"})
+    
+    # Aqui va el hasheo de la contraseña (No he importado la libreria aun)
+
+    new_user = User(username = username, email = email, password = password, is_active = is_active)
+
+
+    try:
+        db.session.add(new_user)
+        db.session.commit()
+        return jsonify({"Message":"Usurio creado exitosamente"}), 201
+    except Exception as error:
+        db.session.rollback()
+        return jsonify({"Message":f"{error}"}), 500
+
