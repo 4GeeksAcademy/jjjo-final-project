@@ -5,6 +5,8 @@ from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
+from werkzeug.security import generate_password_hash, check_password_hash
+
 
 api = Blueprint('api', __name__)
 
@@ -20,3 +22,49 @@ def handle_hello():
     }
 
     return jsonify(response_body), 200
+
+# @api.route('/users', methods=['GET'])
+# def get_users_list():
+#     users = User.query.all()
+#     user_list = []
+#     for item in users:
+#         user_list.append(item.serialize())
+#     return jsonify(user_list), 200 
+
+@api.route('/signup', methods=['POST'])
+def signup():
+    body = request.json
+    name = body.get("name")
+    last_name = body.get("last_name")
+    username = body.get("username")
+    email = body.get("email")
+    password = body.get("password")
+    is_active = body.get("is_active")
+
+    if username is None or email is None or password is None:
+        return jsonify({"Message":"Se deben llenar todos los datos para continuar"}), 400
+    
+    check_username = User.query.filter_by(username = username).first()
+
+    if check_username is not None:
+        return jsonify({"Message":"Este nombre de usurio ya esta en uso"}), 400
+    
+    check_email =  User.query.filter_by(email=email).first()
+
+    if check_email is not None:
+        return jsonify({"Message":"Esta direccion de correo ya esta en uso"}), 400
+    
+    # Aqui va el hasheo de la contraseña (No he importado la libreria aun)
+    password = generate_password_hash(password)
+    
+    new_user = User(username = username, email = email, password = password, is_active = is_active, name = name, last_name = last_name)
+
+
+    try:
+        db.session.add(new_user)
+        db.session.commit()
+        return jsonify({"Message":"Usurio creado exitosamente"}), 201
+    except Exception as error:
+        db.session.rollback()
+        return jsonify({"Message":f"{error}"}), 500
+
