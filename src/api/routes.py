@@ -68,3 +68,9 @@ def signup():
         db.session.rollback()
         return jsonify({"Message":f"{error}"}), 500
 
+@api.route('/login',methods=['POST'])
+def login():
+    data = request.json
+    email = data.get("email")
+    password = data.get("password")
+    pass
