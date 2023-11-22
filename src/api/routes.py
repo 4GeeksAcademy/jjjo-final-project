@@ -6,10 +6,18 @@ from api.models import db, User
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
+from base64 import b64encode
+import os
 
 
 api = Blueprint('api', __name__)
 
+
+def set_password(password, salt):
+    return generate_password_hash(f"{password}{salt}")
+
+def check_password(hash_password, password):
+    return check_password_hash(hash_password, password)
 # Allow CORS requests to this API
 CORS(api)
 
@@ -55,9 +63,10 @@ def signup():
         return jsonify({"Message":"Esta direccion de correo ya esta en uso"}), 400
     
     # Aqui va el hasheo de la contraseña (No he importado la libreria aun)
-    password = generate_password_hash(password)
+    salt = b64encode(os.urandom(32)).decode("utf-8")
+    password = set_password(password, salt)
     
-    new_user = User(username = username, email = email, password = password, is_active = is_active, name = name, last_name = last_name)
+    new_user = User(username = username, email = email, password = password, is_active = is_active, name = name, last_name = last_name, salt = salt)
 
 
     try:
