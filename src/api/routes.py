@@ -41,7 +41,7 @@ def handle_hello():
 #     return jsonify(user_list), 200 
 
 @api.route('/signup', methods=['POST'])
-def signup(): 
+def signup(): #Capaz poner un nombre mas intuitivo
     body = request.json
     name = body.get("name")
     last_name = body.get("last_name")
@@ -79,7 +79,7 @@ def signup():
 
 @api.route('login',methods=['POST'])
 
-def login():
+def login(): #Capaz poner un nombre mas intuitivo
     body = request.json
     email = body.get("email")
     password = body.get("password")
