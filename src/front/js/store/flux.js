@@ -46,7 +46,25 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				//reset the global store
 				setStore({ demo: demo });
+			},
+			// Define a function inside the actions to consult the API and add a new user
+			signup: async (data) => {
+				//let store = getStore()
+				try{
+					let response = await fetch(`{process.env.BACKEND_URL}/signup`,{
+						method : 'POST',
+						headers : {
+							"Content-type": "application/json"
+						},
+						body: JSON.stringfy(data)
+					})
+					return response.status
+
+				}catch (error) {
+					console.log(error)
+				}
 			}
+
 		}
 	};
 };
