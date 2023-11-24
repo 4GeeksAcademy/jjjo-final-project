@@ -37,36 +37,39 @@ const Login = () => {
 
     return (
         <>
-            <div>
-            <form className="container" onSubmit={handleLogin}>
-                <h1 className="m-2 p-2">Login</h1>
-                <label className="mx-2 p-2">Email</label>
-                <input
-                    type="text"
-                    placeholder="E-mail"
-                    className="form-control"
-                    name="email"
-                    value={user.email}
-                    onChange={handleChange}
-                />
-                <label className="mx-2 p-2" >Password</label>
-                <input
-                    type="password"
-                    placeholder="Password"
-                    className="form-control"
-                    name="password"
-                    value={user.password}
-                    onChange={handleChange}
-                />
-                <button className="m-2">Login</button>
+            <div className="container d-flex justify-content-center">
+                <div className="row col-6 ">
+                    <form className="container border border-secondary" onSubmit={handleLogin}>
+                        <h1 className="d-flex justify-content-center bg bg-secondary rounded text-white m-2 p-2">Bienvenido</h1>
+                        <label className="mx-2 p-2">Email</label>
+                        <input
+                            type="text"
+                            placeholder="Ingresa tu correo electrónico"
+                            className="form-control"
+                            name="email"
+                            value={user.email}
+                            onChange={handleChange}
+                        />
+                        <label className="mx-2 p-2" >Password</label>
+                        <input
+                            type="password"
+                            placeholder="Ingresa tu contraseña"
+                            className="form-control"
+                            name="password"
+                            value={user.password}
+                            onChange={handleChange}
+                        />
+                        <button className=" m-3">Login</button>
 
 
-            </form>
-        </div>
+                    </form>
+                </div>
+            </div>
 
         </>
 
 
     )
 }
-export default Login 
+
+export default Login
