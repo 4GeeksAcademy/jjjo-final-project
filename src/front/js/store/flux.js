@@ -49,15 +49,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			// Define a function inside the actions to consult the API and add a new user
 			signup: async (data) => {
-				//let store = getStore()
+				let store = getStore()
 				try{
-					let response = await fetch(`{process.env.BACKEND_URL}/signup`,{
+					let response = await fetch(`${process.env.BACKEND_URL}/signup`,{
 						method : 'POST',
 						headers : {
-							"Content-type": "application/json"
+							"Content-Type": "application/json"
 						},
-						body: JSON.stringfy(data)
+						body: JSON.stringify(data)
 					})
+					console.log(response.status)
 					return response.status
 
 				}catch (error) {

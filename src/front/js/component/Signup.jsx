@@ -30,12 +30,11 @@ const Signup = () => {
     const handleSignup = async (event) => {
         event.preventDefault()
         let result = await actions.signup(user)
-        console.log(result)
     }
 
     return (
 
-        <form onChange={handleSignup}>
+        <form onSubmit={handleSignup}>
             {/* Enter Name */}
             <div class="mb-3">
                 <label class="form-label"> Nombre </label>
