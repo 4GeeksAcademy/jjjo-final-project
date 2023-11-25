@@ -60,7 +60,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 						},
 						body: JSON.stringify(data)
 					})
-
 					if (response.ok) {
 						let result = await response.json()
 						console.log(result)
@@ -70,12 +69,30 @@ const getState = ({ getStore, getActions, setStore }) => {
 						localStorage.setItem("token", result.token)
 						return response.status
 					}
-					return response.status
-
 				} catch (error) {
+					console.log(response.status)
+					return response.status}
+			},
+
+
+
+			// Define a function inside the actions to consult the API and add a new user
+			signup: async (data) => {
+				let store = getStore()
+				try{
+					let response = await fetch(`${process.env.BACKEND_URL}/signup`,{
+						method : 'POST',
+						headers : {
+							"Content-Type": "application/json"
+						},
+						body: JSON.stringify(data)
+					})
+					return response.status
+				}catch (error) {
 					console.log(error)
 				}
 			}
+
 		}
 	};
 };
