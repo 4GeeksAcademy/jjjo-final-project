@@ -67,7 +67,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 							token: result.token
 						})
 						localStorage.setItem("token", result.token)
-						return response.status
+						return response.status, 200
 					}
 				} catch (error) {
 					console.log("La información no existen en la base de datos")
