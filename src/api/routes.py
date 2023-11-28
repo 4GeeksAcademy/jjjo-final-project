@@ -89,13 +89,13 @@ def login(): #Capaz poner un nombre mas intuitivo
     else:
         user = User.query.filter_by(email=email).one_or_none()
         if user is None:
-            return jsonify({"Message":"Datos incorrectos"}), 400
+            return jsonify({"Message":"El usuario no existe"}), 400
         else:
             if check_password(user.password, password, user.salt):
                 token = create_access_token(identity={"user_id":user.id})
                 return jsonify({"token":token}), 200
             else:
-                return jsonify({"Message":"Datos incorrectos"}), 200
+                return jsonify({"Message":"Datos incorrectos"}), 400
 
 
 

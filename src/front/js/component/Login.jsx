@@ -13,6 +13,8 @@ const Login = () => {
         email: "",
         password: ""
     })
+    const [error, setError] = useState(false)
+
 
     const handleChange = (event) => {
         event.preventDefault()
@@ -28,18 +30,23 @@ const Login = () => {
         event.preventDefault()
         let result = await actions.login(user)
         console.log(result)
-        if (result) (
+        if (result) {
             navigate("/private")
-        )
-
-
+            setError(false)
+        } else {
+            setError(true)
+            console.log("Debes introducir los datos correctos")
+        }
     }
 
     return (
         <>
             <div className="container d-flex justify-content-center">
                 <div className="row col-6 ">
-                    <form className="container border border-secondary" onSubmit={handleLogin}>
+                    {error ? <div className="alert alert-danger d-flex justify-content-center m" role="alert">
+                        Los datos son incorrectos
+                    </div> : ""}
+                    <form className="container border border-secondary m-2" onSubmit={handleLogin}>
                         <h1 className="d-flex justify-content-center bg bg-secondary rounded text-white m-2 p-2">Bienvenido</h1>
                         <label className="mx-2 p-2">Email</label>
                         <input

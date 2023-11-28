@@ -50,7 +50,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			login: async (data) => {
-				let store = getStore()
+				const store = getStore();
 
 				try {
 					let response = await fetch(`${process.env.BACKEND_URL}/login`, {
@@ -67,10 +67,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 							token: result.token
 						})
 						localStorage.setItem("token", result.token)
-						return response.status
+						return response.status, 200
 					}
 				} catch (error) {
-					console.log(response.status)
+					console.log("La información no existen en la base de datos")
 					return response.status}
 			},
 
@@ -91,7 +91,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}catch (error) {
 					console.log(error)
 				}
-			}
+			},
+			logout: () => {
+				setStore({
+					token: null
+				})
+				localStorage.removeItem("token")
+			},
 
 		}
 	};
