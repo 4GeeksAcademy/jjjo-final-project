@@ -13,7 +13,7 @@ export const Readmore = () => {
         </div>
         <div className="row">
           <div className="col-12 border border-primary rounder">(Nombre de la aplicacion) es una aplicacion con el fin de hacer mucho mas sencillo encontrar
-          profesores u alumnos, </div>
+          profesores u alumnos, esta aplicacion funciona de manera que permite un contacto directo entre mentores y estufiantes de diferentes partes del mundo. <br></br></div>
         </div>
       </div>
     </div>
