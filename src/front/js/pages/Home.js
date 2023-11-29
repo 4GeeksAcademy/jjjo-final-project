@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
+import { Link } from "react-router-dom";
 import "../../styles/home.css";
 
 export const Home = () => {
@@ -15,7 +16,15 @@ export const Home = () => {
             <div className="border border-primary rounded mb-3"><p>(Nombre de la aplicacion) es una plataforma pensada para maestros y estudiantes que necesiten ayuda.
               Funciona de manera que los usurios puedan encontrar la mentoria particular de profesor para diversas materias, de la misma manera facilita a los mentores
               un medio para obtener esdiantes online de manera sencilla y directa...</p></div>
-            <div className="mb-5"><button className="p-2 rounded mx-2">Registrate</button><button className="p-2 rounded mx-2">Leer más</button></div>
+            <div className="mb-5">
+              <Link to="/signup">
+                <button className="p-2 rounded mx-2">Registrate</button>
+              </Link>
+              <Link to="/readmore">
+                <button className="p-2 rounded mx-2">Leer más</button>
+              </Link>
+            </div>
+
           </div>
         </div>
       </div>
@@ -41,6 +50,8 @@ export const Home = () => {
           <span className="visually-hidden">Next</span>
         </button>
       </div>
-    </div> 
-    );        
+    </div >
+  );
 };
+
+export default Home

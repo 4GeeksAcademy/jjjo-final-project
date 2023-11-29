@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 
-import { Home } from "./pages/home";
+import { Home } from "./pages/Home.js";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
@@ -13,6 +13,7 @@ import { Footer } from "./component/footer";
 import { Private } from "./component/Private.jsx"
 import Login from "./component/Login.jsx";
 import Signup from "./component/Signup.jsx";
+import { Readmore } from "./pages/Readmore.jsx";
 
 //create your first component
 const Layout = () => {
@@ -34,6 +35,7 @@ const Layout = () => {
                         <Route element={<Login />} path="/login" />
                         <Route element={<Private />} path="/private" />
                         <Route element={<Single />} path="/single/:theid" />
+                        <Route element={<Readmore />} path="/readmore" />
                         <Route element={<h1>Not found!</h1>} />
 
                     </Routes>
