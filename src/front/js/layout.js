@@ -14,6 +14,7 @@ import { Private } from "./component/Private.jsx"
 import Login from "./component/Login.jsx";
 import Signup from "./component/Signup.jsx";
 import { Readmore } from "./pages/Readmore.jsx";
+import { Aboutus } from "./pages/Aboutus.jsx";
 
 //create your first component
 const Layout = () => {
@@ -29,13 +30,14 @@ const Layout = () => {
                 <ScrollToTop>
                     <Navbar />
                     <Routes>
-                        <Route element={<Home />} path="/" />
+                        <Route element={<Home />} path="/home" />
                         <Route element={<Signup/>} path="/signup"/>
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Login />} path="/login" />
                         <Route element={<Private />} path="/private" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<Readmore />} path="/readmore" />
+                        <Route element={<Aboutus />}path="/aboutus"/>
                         <Route element={<h1>Not found!</h1>} />
 
                     </Routes>

@@ -17,11 +17,11 @@ export const Home = () => {
               Funciona de manera que los usurios puedan encontrar la mentoria particular de profesor para diversas materias, de la misma manera facilita a los mentores
               un medio para obtener esdiantes online de manera sencilla y directa...</p></div>
             <div className="mb-5">
-              <Link to="/signup">
-                <button className="p-2 rounded mx-2">Registrate</button>
-              </Link>
               <Link to="/readmore">
                 <button className="p-2 rounded mx-2">Leer más</button>
+              </Link>
+              <Link to="/aboutus">
+                <button className="p-2 rounded mx-2">Sobre Nosotros</button>
               </Link>
             </div>
 
