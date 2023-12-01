@@ -131,8 +131,8 @@ def add_favorites_users(user_added, user_id):
 # aqui seria 200 o 201?
     except Exception as error:
         db.session.rollback()
-        return jsonify({"Message":"f"{error}"}), 500
-    
+        return jsonify({"Message":f"{error}"}), 500
+
 api.route ('favorites/user/<int:user_added>/<int:user_id>', methods=['DELETE'])
 def delete_favorite(user_added, user_id):
     favorite = Favorites.query.filter_by(user_id=user_id, user_id=user_added).first()
