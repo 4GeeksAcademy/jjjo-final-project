@@ -14,7 +14,7 @@ export const Navbar = () => {
 
 		<nav className="navbar navbar-expand-lg navbar-light bg-secondary">
 			<div className="container-fluid">
-				<Link to="/home">
+				<Link to="/">
 					<img className="my-img p-2" src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fpngtree.com%2Ffree-png-vectors%2Fman-pictogram&psig=AOvVaw2jmh94r2WoYwLwBQyPspnl&ust=1700948680537000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCLCR5-HN3YIDFQAAAAAdAAAAABAJ" alt="A person studying"></img>
 				</Link>
 				<button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -84,7 +84,7 @@ export const Navbar = () => {
 						<button className="btn btn-outline-dark" type="submit">Buscar</button>
 					</form> */}
 					
-					<Link to="/login">
+					<Link to="/home">
 						<button onClick={() => { actions.logout() }} className="m-2 btn btn-primary">Logout</button>
 					</Link>
 				</div>

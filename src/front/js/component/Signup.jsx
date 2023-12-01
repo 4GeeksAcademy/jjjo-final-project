@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react"
 import { Context } from "../store/appContext"
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
 
@@ -21,6 +22,10 @@ const Signup = () => {
         })
     }
 
+    {/* Call useNavigate() */ }
+
+    const navigate = useNavigate()
+
     {/* Destructure the Context */ }
 
     const { actions } = useContext(Context)
@@ -30,6 +35,16 @@ const Signup = () => {
     const handleSignup = async (event) => {
         event.preventDefault()
         let result = await actions.signup(user)
+        if (result == 400) {
+            alert("Este usuario ya existe")
+        }
+        else if (result == 201) {
+            alert("Registro exitoso")
+            navigate("/login")
+        }
+        else {
+            alert("No se pudo completar el registro. Intente despues")
+        }
     }
 
     return (
