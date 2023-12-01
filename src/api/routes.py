@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User
+from api.models import db, User, Favorites
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -96,7 +96,56 @@ def login(): #Capaz poner un nombre mas intuitivo
                 return jsonify({"token":token}), 200
             else:
                 return jsonify({"Message":"Datos incorrectos"}), 400
+            
+@api.route ('user/favorites/int:theid', methods=['GET'])
+def get_user_favorites(theid=None):
+    if theid is None:
+        return jsonify({"Message":"This user does not exist"}), 404
+    
+    favorites = Favorites.query.get.filter_by(user_id=theid).all()
+    if favorites is None:
+        return jsonify({"Message":"This user has no favorites"})
+    favorites_list = []
+    for item in favorites:
+        favorites_list.append(item.serialize())
+    return jsonify(favorites_list), 200
 
+@api.route ('favorites/user/<int:user_added>/<int:user_id>', methods=['POST'])
+def add_favorites_users(user_added, user_id):
+    favorites = Favorites.query.filter_by(user_id = user_added, user_id = user_id).first()
 
+    user = User.query.get(user_id)
+    if user is None:
+        return jsonify({"Message":"This user does not exist"}), 404
+    
+    if favorites is not None:
+        return jsonify({"Message":"This favorite alredy exist"}), 
+# Buscar que error va aqui
+
+    add_favorite = Favorites(user_id = user_id, user_added = user_id)
+    db.sessions.add(add_favorite)
+
+    try:
+        db.session.commit()
+        return  jsonify({"Message":"The favorite was added"}), 200
+# aqui seria 200 o 201?
+    except Exception as error:
+        db.session.rollback()
+        return jsonify({"Message":"f"{error}"}), 500
+    
+api.route ('favorites/user/<int:user_added>/<int:user_id>', methods=['DELETE'])
+def delete_favorite(user_added, user_id):
+    favorite = Favorites.query.filter_by(user_id=user_id, user_id=user_added).first()
+
+    if favorite is None:
+        return jsonify({"Message":"This favorite does not exist"}), 404
+    
+    try:
+        db.session.delete(favorite)
+        db.session.commit()
+        return jsonify({"Message":"This favorite was deleted"})
+    except Exception as error:
+        db.session.rollback()
+        return jsonify({"Message":f"{error}"}), 500
 
 
