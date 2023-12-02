@@ -9,7 +9,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from base64 import b64encode
 import os
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
-
+import json 
 
 api = Blueprint('api', __name__)
 
@@ -22,6 +22,7 @@ def check_password(hash_password, password, salt): ## Agregue el salt como param
 # Allow CORS requests to this API
 CORS(api)
 
+user_path = os.path.join(os.path.dirname(__file__), "users.json") ##ruta 
 
 @api.route('/hello', methods=['POST', 'GET'])
 def handle_hello():
@@ -97,6 +98,30 @@ def login(): #Capaz poner un nombre mas intuitivo
             else:
                 return jsonify({"Message":"Datos incorrectos"}), 400
 
-
+###Endpoint to populate the DB
+@api.route("/user-population", methods=["GET"])
+def user_population():
+    with open(user_path, "r") as file:
+        data = json.load(file)
+        file.close
+        for user in data:
+            salt = b64encode(os.urandom(32)).decode("utf-8")
+            password = set_password(user["password"], salt)
+            user = User(
+                name=user["name"],
+                last_name=user["last_name"],
+                username=user["username"],
+                email=user["email"],
+                password=password,
+                salt=salt,
+            )
+            db.session.add(user)
+            try:
+                db.session.commit()
+            except Exception as error:
+                print("error:", error.args)
+                return jsonify("rodo fallo"), 500
+        
+    return jsonify("todo funciono"), 200
 
 
