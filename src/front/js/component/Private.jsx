@@ -26,20 +26,20 @@ export const Private = () => {
                 <div className="container">
                     <div className="container m-3 d-flex justify-content-center">
                         <img src="https://picsum.photos/50/50" className=" my-profile-img d-flex justify-content-center" alt="..." />
-                        <div className="card-body">
-
+                        <div className="card-body border">
                             {/* <p className="card-text">{store.user.location}</p> */}
-                            <h3 className="card-text">Este es mi correo electrónico</h3>
-                            <p className="card-text">{store.user.email}</p>
-                            <h3 className="card-text">Este es mi Nombre de Usuario</h3>
+                            <h1 className="card-title">{store.user.name}  {store.user.last_name} </h1>
+                            <h5 className="p-3 mb-2 bg-secondary text-white bg-opacity-75 rounded">Nombre de Usuario</h5>
                             <p className="card-text">{store.user.username}</p>
-                            <h3 className="card-text">Un poco mas sobre mi</h3>
+                            <h5 className="p-3 mb-2 bg-secondary text-white bg-opacity-75 rounded">Correo electrónico</h5>
+                            <p className="card-text">{store.user.email}</p>
+                            <h5 className="p-3 mb-2 bg-secondary text-white bg-opacity-75 rounded">Un poco mas sobre mi...</h5>
                             <p className="card-text">{store.user.description}</p>
                         </div>
                     </div>
                 </div>
                 <div className="card-body">
-                    <h5 className="card-title">{store.user.name}  {store.user.last_name} </h5>
+
 
                     <p className="card-text">Una invitacion a seguir al usuario sea como estudiante o como profesor</p>
                     <a href="#" className="btn btn-primary">Contactame (aqui iria el link para mandar un correo electronico)</a>

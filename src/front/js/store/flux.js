@@ -62,11 +62,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 						},
 						body: JSON.stringify(data)
 					})
-					// Agregue estas dos lineas (para revision) deben agregar el usuario al store
-					setStore({
-						user: [store.user, data]
-					})
-
 					return response.status
 				} catch (error) {
 					console.log(error)

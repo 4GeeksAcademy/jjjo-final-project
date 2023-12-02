@@ -69,7 +69,7 @@ def signup(): #Capaz poner un nombre mas intuitivo
     salt = b64encode(os.urandom(32)).decode("utf-8")
     password = set_password(password, salt)
     
-    new_user = User(username = username, email = email, password = password, name = name, last_name = last_name, salt = salt, description = description)
+    new_user = User(username = username, email = email, password = password, name = name, last_name = last_name, salt = salt)
 
     try:
         db.session.add(new_user)
