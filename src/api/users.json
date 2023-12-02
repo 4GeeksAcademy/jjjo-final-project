@@ -1,0 +1,22 @@
+[
+    {
+        "name": "Darth",
+        "last_name": "Vader",
+        "username": "darthv3",
+        "email": "darth@email.com",
+        "password": "123456"
+    },
+    {
+        "name": "Deimian",
+        "last_name": "Vasquez",
+        "username": "dvasquez1",
+        "email": "dvasquez@email.com",
+        "password": "123456"
+    },
+    {
+        "name": "Deimian2",
+        "last_name": "Vasquez2",
+        "username": "dvasquez2",
+        "email": "dvasquez2@email.com",
+        "password": "123456"}
+    ]
