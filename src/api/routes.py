@@ -48,6 +48,8 @@ def signup(): #Capaz poner un nombre mas intuitivo
     username = body.get("username")
     email = body.get("email")
     password = body.get("password")
+    description = body.get("description")
+
 
     if username is None or email is None or password is None:
         return jsonify({"Message":"Se deben llenar todos los datos para continuar"}), 400
@@ -66,7 +68,7 @@ def signup(): #Capaz poner un nombre mas intuitivo
     salt = b64encode(os.urandom(32)).decode("utf-8")
     password = set_password(password, salt)
     
-    new_user = User(username = username, email = email, password = password, name = name, last_name = last_name, salt = salt)
+    new_user = User(username = username, email = email, password = password, name = name, last_name = last_name, salt = salt, description = description)
 
     try:
         db.session.add(new_user)
@@ -96,7 +98,19 @@ def login(): #Capaz poner un nombre mas intuitivo
                 return jsonify({"token":token}), 200
             else:
                 return jsonify({"Message":"Datos incorrectos"}), 400
+            
 
+@api.route ('/user', methods=['GET'])
+@jwt_required()
+def get_user():
+    id = get_jwt_identity()["user_id"]
+    user = User.query.get(id)
+    print(user)
+    # user = user.query.get(id)
+    if user is None:
+        return ({"message": "user doesn't exist"})
+    return jsonify((user.serialize())), 200
+    
 
 
 

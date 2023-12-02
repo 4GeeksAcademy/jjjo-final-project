@@ -15,11 +15,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			],
 			token: localStorage.getItem("token") || null,
-			user : []
+			user: {}
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
-			
+
 
 			login: async (data) => {
 				const store = getStore();
@@ -37,13 +37,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 						console.log(result)
 						setStore({
 							token: result.token
+
 						})
 						localStorage.setItem("token", result.token)
+						getActions().getLogedUser()
 						return response.status, 200
 					}
 				} catch (error) {
 					console.log("La información no existen en la base de datos")
-					return response.status}
+					return response.status
+				}
 			},
 
 
@@ -51,26 +54,53 @@ const getState = ({ getStore, getActions, setStore }) => {
 			// Define a function inside the actions to consult the API and add a new user
 			signup: async (data) => {
 				let store = getStore()
-				try{
-					let response = await fetch(`${process.env.BACKEND_URL}/signup`,{
-						method : 'POST',
-						headers : {
+				try {
+					let response = await fetch(`${process.env.BACKEND_URL}/signup`, {
+						method: 'POST',
+						headers: {
 							"Content-Type": "application/json"
 						},
 						body: JSON.stringify(data)
 					})
+					// Agregue estas dos lineas (para revision) deben agregar el usuario al store
+					setStore({
+						user: [store.user, data]
+					})
+
 					return response.status
-				}catch (error) {
+				} catch (error) {
 					console.log(error)
 				}
 			},
+
 			logout: () => {
 				setStore({
 					token: null
 				})
 				localStorage.removeItem("token")
-			}
+			},
+
+			getLogedUser: async () => {
+				const store = getStore()
+				let response = await fetch(`${process.env.BACKEND_URL}/user`, {
+					method: 'GET',
+					headers: {
+						"Authorization": `Bearer ${store.token}`
 					}
+				})
+				console.log(response)
+				let data = await response.json()
+				if (response.ok) {
+					setStore(
+						{
+							user: data
+						}
+					)
+				}
+
+
+			}
+		}
 	};
 };
 
