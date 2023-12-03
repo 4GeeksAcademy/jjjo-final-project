@@ -14,7 +14,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					initial: "white"
 				}
 			],
-			token: localStorage.getItem("token") || null
+			token: localStorage.getItem("token") || null,
+			favorites: []
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -23,14 +24,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			getMessage: async () => {
-				try{
+				try {
 					// fetching data from the backend
 					const resp = await fetch(process.env.BACKEND_URL + "/api/hello")
 					const data = await resp.json()
 					setStore({ message: data.message })
 					// don't forget to return something, that is how the async resolves
 					return data;
-				}catch(error){
+				} catch (error) {
 					console.log("Error loading message from backend", error)
 				}
 			},
@@ -71,7 +72,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 				} catch (error) {
 					console.log("La información no existen en la base de datos")
-					return response.status}
+					return response.status
+				}
 			},
 
 
@@ -79,16 +81,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 			// Define a function inside the actions to consult the API and add a new user
 			signup: async (data) => {
 				let store = getStore()
-				try{
-					let response = await fetch(`${process.env.BACKEND_URL}/signup`,{
-						method : 'POST',
-						headers : {
+				try {
+					let response = await fetch(`${process.env.BACKEND_URL}/signup`, {
+						method: 'POST',
+						headers: {
 							"Content-Type": "application/json"
 						},
 						body: JSON.stringify(data)
 					})
 					return response.status
-				}catch (error) {
+				} catch (error) {
 					console.log(error)
 				}
 			},
@@ -98,6 +100,22 @@ const getState = ({ getStore, getActions, setStore }) => {
 				})
 				localStorage.removeItem("token")
 			},
+			addFavorite: (itemToSave) => {
+				let store = getStore()
+				let exists = store.favorites.some((item) => item.id == itemToSave.id)
+				if (exists) {
+					let newArr = store.favorites.filter((item) => item.id != itemToSave.id)
+
+					setStore({
+						favorites: newArr
+					})
+				} else {
+					setStore({
+						favorites: [...store.favorites, itemToSave]
+					})
+				}
+
+			}
 
 		}
 	};
