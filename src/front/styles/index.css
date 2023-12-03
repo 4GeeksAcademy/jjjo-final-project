@@ -5,3 +5,11 @@
     width: 100px;
     height: 50px;
 }
+
+.subject-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}

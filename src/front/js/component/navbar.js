@@ -28,11 +28,11 @@ export const Navbar = () => {
 									Materias
 								</a>
 								<ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-									<li><a className="dropdown-item" href="#">Matemáticas</a></li>
-									<li><a className="dropdown-item" href="#">Química</a></li>
-									<li><a className="dropdown-item" href="#">Física</a></li>
-									<li><a className="dropdown-item" href="#">Filosofía</a></li>
-									<li><a className="dropdown-item" href="#">Programación</a></li>
+									<li><a className="dropdown-item" href="/math">Matemáticas</a></li>
+									<li><a className="dropdown-item" href="/chemistry">Química</a></li>
+									<li><a className="dropdown-item" href="/physics">Física</a></li>
+									<li><a className="dropdown-item" href="/biology">Biologia</a></li>
+									<li><a className="dropdown-item" href="/coding">Programación</a></li>
 									<li><hr className="dropdown-divider" /></li>
 									<li><a className="dropdown-item" href="#">¿Buscas un tema diferente?</a></li>
 								</ul>
@@ -85,11 +85,11 @@ export const Navbar = () => {
 									Materias
 								</a>
 								<ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-									<li><a className="dropdown-item" href="#">Matemáticas</a></li>
-									<li><a className="dropdown-item" href="#">Química</a></li>
-									<li><a className="dropdown-item" href="#">Física</a></li>
-									<li><a className="dropdown-item" href="#">Filosofía</a></li>
-									<li><a className="dropdown-item" href="#">Programación</a></li>
+									<li><a className="dropdown-item" href="/math">Matemáticas</a></li>
+									<li><a className="dropdown-item" href="/chemistry">Química</a></li>
+									<li><a className="dropdown-item" href="/physics">Física</a></li>
+									<li><a className="dropdown-item" href="/biology">Biologia</a></li>
+									<li><a className="dropdown-item" href="/coding">Programación</a></li>
 									<li><hr className="dropdown-divider" /></li>
 									<li><a className="dropdown-item" href="#">¿Buscas un tema diferente?</a></li>
 								</ul>
