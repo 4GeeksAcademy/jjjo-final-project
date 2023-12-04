@@ -5,9 +5,8 @@ import { Navigate, useNavigate } from "react-router-dom"
 
 
 const Login = () => {
-
     const navigate = useNavigate()
-    const { actions } = useContext(Context)
+    const { store, actions } = useContext(Context)
 
     const [user, setUser] = useState({
         email: "",
@@ -30,8 +29,8 @@ const Login = () => {
         event.preventDefault()
         let result = await actions.login(user)
         console.log(result)
-        if (result) {
-            navigate("/private")
+        if (result == 200) {
+            navigate(`/user`)
             setError(false)
         } else {
             setError(true)
