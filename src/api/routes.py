@@ -50,10 +50,7 @@ def signup(): #Capaz poner un nombre mas intuitivo
     email = body.get("email")
     password = body.get("password")
 
-    if name or last_name or username or email or password is "":
-        return jsonify ({"Message":"Fill in all the data"})
-
-    if username is None or email is None or password is None:
+    if username is None or email is None or password is None or name is None or last_name is None:
         return jsonify({"Message":"Se deben llenar todos los datos para continuar"}), 400
     
     check_username = User.query.filter_by(username = username).first()
@@ -108,7 +105,7 @@ def get_user_favorites(theid=None):
     if theid is None:
         return jsonify({"Message":"This user does not exist"}), 404
     
-    favorites = Favorites.query.get.filter_by(user_id=theid).all()
+    favorites = Favorites.query.filter_by(user_id=theid).all()
 
     if favorites is None:
         return jsonify({"Message":"This user has no favorites"})
