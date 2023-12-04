@@ -100,15 +100,17 @@ def login(): #Capaz poner un nombre mas intuitivo
             
 
 # Un metodo get para comprobar que los favoritos del usurio se estan creando
-@api.route ('user/favorites/int:theid', methods=['GET'])
-def get_user_favorites(theid=None):
-    if theid is None:
+@api.route ('user/favorites', methods=['GET'])
+@jwt_required()
+def get_user_favorites():
+    student_id = get_jwt_identity()["user_id"]
+    if student_id is None:
         return jsonify({"Message":"This user does not exist"}), 404
     
-    favorites = Favorites.query.filter_by(user_id=theid).all()
+    favorites = Favorites.query.filter_by(student_id=student_id).all()
 
     if favorites is None:
-        return jsonify({"Message":"This user has no favorites"})
+        return jsonify({"Message":"This user has no favorites"}), 404
     
     favorites_list = []
 
