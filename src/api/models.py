@@ -53,5 +53,5 @@ class Favorites(db.Model):
         return{
             "id": self.id,
             "student_id": self.user_id,
-            "instructor_id": self.people_id
+            "instructor_id": self.instructor_id
         }   

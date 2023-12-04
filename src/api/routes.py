@@ -50,6 +50,9 @@ def signup(): #Capaz poner un nombre mas intuitivo
     email = body.get("email")
     password = body.get("password")
 
+    if name or last_name or username or email or password is "":
+        return jsonify ({"Message":"Fill in all the data"})
+
     if username is None or email is None or password is None:
         return jsonify({"Message":"Se deben llenar todos los datos para continuar"}), 400
     
@@ -78,7 +81,7 @@ def signup(): #Capaz poner un nombre mas intuitivo
         return jsonify({"Message":f"{error}"}), 500
 
 
-@api.route('login',methods=['POST'])
+@api.route('/login',methods=['POST'])
 
 def login(): #Capaz poner un nombre mas intuitivo
     body = request.json
@@ -118,8 +121,10 @@ def get_user_favorites(theid=None):
 
 
 # End point para crear favoritos
-@api.route ('favorites/user/<int:instructor_id>/<int:student_id>', methods=['POST'])
-def add_favorites_users(instructor_id, student_id):
+@api.route ('favorites/user/<int:instructor_id>', methods=['POST'])
+@jwt_required()
+def add_favorites_users(instructor_id):
+    student_id = get_jwt_identity()["user_id"]
     favorites = Favorites.query.filter_by(instructor_id = instructor_id, student_id = student_id).first()
 
     user = User.query.get(instructor_id)
@@ -130,7 +135,7 @@ def add_favorites_users(instructor_id, student_id):
         return jsonify({"Message":"This favorite alredy exist"}), 400
 
     add_favorite = Favorites(student_id = student_id, instructor_id = instructor_id)
-    db.sessions.add(add_favorite)
+    db.session.add(add_favorite)
 
     try:
         db.session.commit()
@@ -141,8 +146,10 @@ def add_favorites_users(instructor_id, student_id):
         return jsonify({"Message":f"{error}"}), 500
 
 # End point para borrar favoritos creados
-api.route ('favorites/user/<int:instructor_id>/<int:student_id>', methods=['DELETE'])
+api.route ('favorites/user/<int:instructor_id>', methods=['DELETE'])
+@jwt_required()
 def delete_favorite(instructor_id, student_id):
+    student_id = get_jwt_identity()["user_id"]
     favorite = Favorites.query.filter_by(student_id=student_id, user_id=instructor_id).first()
 
     if favorite is None:
@@ -157,6 +164,8 @@ def delete_favorite(instructor_id, student_id):
         db.session.rollback()
         return jsonify({"Message":f"{error}"}), 500
 ###Endpoint to populate the DB
+
+
 @api.route("/user-population", methods=["GET"])
 def user_population():
     with open(user_path, "r") as file:
