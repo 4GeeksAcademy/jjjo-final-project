@@ -99,10 +99,74 @@ def login(): #Capaz poner un nombre mas intuitivo
                 return jsonify({"token":token}), 200
             else:
                 return jsonify({"Message":"Datos incorrectos"}), 400
+            
+# Un metodo get para comprobar que los favoritos del usurio se estan creando
+@api.route ('user/favorites', methods=['GET'])
+@jwt_required()
+def get_user_favorites():
+    student_id = get_jwt_identity()["user_id"]
+    if student_id is None:
+        return jsonify({"Message":"This user does not exist"}), 404
+    
+    favorites = Favorites.query.filter_by(student_id=student_id).all()
+
+    if favorites is None:
+        return jsonify({"Message":"This user has no favorites"}), 404
+    
+    favorites_list = []
+
+    for item in favorites:
+        favorites_list.append(item.serialize())
+    return jsonify(favorites_list), 200
+
+
+# End point para crear favoritos
+@api.route ('favorites/user/<int:instructor_id>', methods=['POST'])
+@jwt_required()
+def add_favorites_users(instructor_id):
+    student_id = get_jwt_identity()["user_id"]
+    favorites = Favorites.query.filter_by(instructor_id = instructor_id, student_id = student_id).first()
+
+    user = User.query.get(instructor_id)
+    if user is None:
+        return jsonify({"Message":"This user does not exist"}), 404
+    
+    if favorites is not None:
+        return jsonify({"Message":"This favorite alredy exist"}), 400
+
+    add_favorite = Favorites(student_id = student_id, instructor_id = instructor_id)
+    db.session.add(add_favorite)
+
+    try:
+        db.session.commit()
+        return  jsonify({"Message":"The favorite was added"}), 200
+
+    except Exception as error:
+        db.session.rollback()
+        return jsonify({"Message":f"{error}"}), 500
+
+
+# End point para borrar favoritos creados
+api.route ('favorites/user/<int:instructor_id>', methods=['DELETE'])
+@jwt_required()
+def delete_favorite(instructor_id, student_id):
+    student_id = get_jwt_identity()["user_id"]
+    favorite = Favorites.query.filter_by(student_id=student_id, user_id=instructor_id).first()
+
+    if favorite is None:
+        return jsonify({"Message":"This favorite does not exist"}), 404
+    
+    try:
+        db.session.delete(favorite)
+        db.session.commit()
+        return jsonify({"Message":"This favorite was deleted"})
+    
+    except Exception as error:
+        db.session.rollback()
+        return jsonify({"Message":f"{error}"}), 500
+    
 
 ###Endpoint to populate the DB
-
-
 @api.route("/user-population", methods=["GET"])
 def user_population():
     with open(user_path, "r") as file:
