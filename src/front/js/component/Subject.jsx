@@ -23,12 +23,13 @@ export const Subject = () => {
 
                                 </div>
                             </div>
+                            
                             <ul className="list-group list-group-flush">
-                                <li className=" d-flex justify-content-between list-group-item">Primer profesor <button className="btn bg-info"><i className="fa-solid fa-star"></i></button></li>
-                                <li className="d-flex justify-content-between list-group-item">Segundo profesor <button className="btn bg-info"><i className="fa-solid fa-star"></i></button></li>
-                                <li className="d-flex justify-content-between list-group-item">Tercer profesor <button className="btn bg-info"><i className="fa-solid fa-star"></i></button></li>
-                                <li className="d-flex justify-content-between list-group-item">Cuarto profesor <button className="btn bg-info"><i className="fa-solid fa-star"></i></button></li>
-                                <li className="d-flex justify-content-between list-group-item">Quinto profesor <button className="btn bg-info"><i className="fa-solid fa-star"></i></button></li>
+                                <li className=" d-flex justify-content-between list-group-item">Primer profesor <button className="btn bg-info"><i onClick={() => actions.addFavorite()} className="fa-solid fa-star"></i></button></li>
+                                <li className="d-flex justify-content-between list-group-item">Segundo profesor <button className="btn bg-info"><i onClick={() => actions.addFavorite()} className="fa-solid fa-star"></i></button></li>
+                                <li className="d-flex justify-content-between list-group-item">Tercer profesor <button className="btn bg-info"><i onClick={() => actions.addFavorite()} className="fa-solid fa-star"></i></button></li>
+                                <li className="d-flex justify-content-between list-group-item">Cuarto profesor <button className="btn bg-info"><i onClick={() => actions.addFavorite()} className="fa-solid fa-star"></i></button></li>
+                                <li className="d-flex justify-content-between list-group-item">Quinto profesor <button className="btn bg-info"><i onClick={() => actions.addFavorite()} className="fa-solid fa-star"></i></button></li>
                             </ul>
                         </div>
                         <Link className="d-flex justify-content-center" to="/">

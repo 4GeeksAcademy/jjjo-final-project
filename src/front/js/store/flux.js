@@ -15,7 +15,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			],
 			token: localStorage.getItem("token") || null,
-			favorites: []
+			favorites: [],
 			user: {}
 		},
 		actions: {
@@ -75,6 +75,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				})
 				localStorage.removeItem("token")
 			},
+			
 			addFavorite: (itemToSave) => {
 				let store = getStore()
 				let exists = store.favorites.some((item) => item.id == itemToSave.id)
@@ -90,7 +91,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 				}
 
-			}
+			},
 
 			getLogedUser: async () => {
 				const store = getStore()

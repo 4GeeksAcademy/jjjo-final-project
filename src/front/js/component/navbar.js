@@ -42,22 +42,6 @@ export const Navbar = () => {
 						<input className="form-control me-2" type="search" placeholder="¿Qué buscas?" aria-label="Search" />
 						<button className="btn btn-outline-dark" type="submit">Buscar</button>
 					</form> */}
-						<div className="ml-auto">
-							<button className="btn btn-secondary dropdown-toggle bg-primary" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-								Favoritos ({store.favorites.length})
-							</button>
-							<ul className="dropdown dropdown-menu dropdown-menu-end bg-warning">
-								{
-									store.favorites.map((item) => {
-										return (
-											<li key={item._id} className="d-flex justify-content-between align-items-center">
-												<p className="dropdown-item my-1">{item.properties.name}</p><i onClick={() => actions.deleteFavorite(item)} className="fa-solid fa-trash mx-2"></i>
-											</li>
-										)
-									})
-								}
-							</ul>
-						</div>
 						<Link to="/signup">
 							<button className="m-2 btn btn-secondary">Crea tu cuenta</button>
 						</Link>
@@ -99,7 +83,22 @@ export const Navbar = () => {
 						<input className="form-control me-2" type="search" placeholder="¿Qué buscas?" aria-label="Search" />
 						<button className="btn btn-outline-dark" type="submit">Buscar</button>
 					</form> */}
-
+						<div className="ml-auto">
+							<button className="btn btn-secondary dropdown-toggle bg-primary" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+								Favoritos ({store.favorites.length})
+							</button>
+							<ul className="dropdown dropdown-menu dropdown-menu-end bg-warning">
+								{
+									store.favorites.map((item) => {
+										return (
+											<li key={item._id} className="d-flex justify-content-between align-items-center">
+												<p className="dropdown-item my-1">{item.properties.name}</p><i onClick={() => actions.deleteFavorite(item)} className="fa-solid fa-trash mx-2"></i>
+											</li>
+										)
+									})
+								}
+							</ul>
+						</div>
 						<Link to="/home">
 							<button onClick={() => { actions.logout() }} className="m-2 btn btn-primary">Logout</button>
 						</Link>
