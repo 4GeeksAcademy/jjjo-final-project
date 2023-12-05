@@ -3,7 +3,7 @@
 */
 .my-img {
     width: 100px;
-    height: 50px;
+    height: 80px;
 }
 
 .subject-img {
@@ -12,4 +12,9 @@
     display: block;
     margin-left: auto;
     margin-right: auto;
+}
+
+.my-profile-img {
+    width: 450px;
+    height: 300px;
 }
