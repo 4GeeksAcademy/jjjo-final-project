@@ -100,6 +100,7 @@ def login(): #Capaz poner un nombre mas intuitivo
             else:
                 return jsonify({"Message":"Datos incorrectos"}), 400
             
+            
 # Un metodo get para comprobar que los favoritos del usurio se estan creando
 @api.route ('user/favorites', methods=['GET'])
 @jwt_required()
