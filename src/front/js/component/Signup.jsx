@@ -35,6 +35,12 @@ const Signup = () => {
     const handleSignup = async (event) => {
         event.preventDefault()
         let result = await actions.signup(user)
+        // Verifica que todos los campos requeridos estén completos
+        if (user.name === "" || user.last_name === "" || user.email === "" || user.username === "" || user.password === "") {
+            alert("Se deben llenar todos los datos para continuar")
+            return
+        }
+
         if (result == 400) {
             alert("Este usuario ya existe")
         }

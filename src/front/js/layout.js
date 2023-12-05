@@ -5,7 +5,6 @@ import { BackendURL } from "./component/backendURL";
 
 import { Home } from "./pages/home.js";
 import { Demo } from "./pages/demo";
-import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
@@ -14,6 +13,8 @@ import { Private } from "./component/Private.jsx"
 import { Subject } from "./component/Subject.jsx";
 import Login from "./component/Login.jsx";
 import Signup from "./component/Signup.jsx";
+import Following from "./component/Following.jsx"
+import Background from "./component/Background.jsx"
 import { Readmore } from "./pages/Readmore.jsx";
 import { Aboutus } from "./pages/Aboutus.jsx";
 
@@ -35,8 +36,9 @@ const Layout = () => {
                         <Route element={<Signup />} path="/signup" />
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Login />} path="/login" />
-                        <Route element={<Private />} path="/private" />
-                        <Route element={<Single />} path="/single/:theid" />
+                        <Route element={<Private />} path="/user" />
+                        <Route element={<Following />} path="/user/following" />
+                        <Route element={<Background />} path="/user/background" />
                         <Route element={<Readmore />} path="/readmore" />
                         <Route element={<Aboutus />} path="/aboutus" />
                         <Route element={<Subject />} path="/:nature" />
