@@ -3,6 +3,7 @@
 */
 .my-img {
     width: 100px;
+<<<<<<< HEAD
     height: 80px;
 }
 
@@ -17,4 +18,7 @@
 .my-profile-img {
     width: 450px;
     height: 300px;
+=======
+    height: 50px;
+>>>>>>> d3e3da6 (changes on nav bar, trying to update an image)
 }
