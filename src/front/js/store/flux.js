@@ -16,6 +16,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			],
 			token: localStorage.getItem("token") || null,
 			favorites: [],
+	
 			user: {}
 		},
 		actions: {
