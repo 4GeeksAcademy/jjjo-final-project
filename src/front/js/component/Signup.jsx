@@ -34,16 +34,25 @@ const Signup = () => {
 
     const handleSignup = async (event) => {
         event.preventDefault()
-        let result = await actions.signup(user)
-        if (result == 400) {
-            alert("Este usuario ya existe")
-        }
-        else if (result == 201) {
-            alert("Registro exitoso")
-            navigate("/login")
+        // Verifica que todos los campos requeridos estén completos
+        if (user.name === "" || user.last_name === "" || user.email === "" || user.username === "" || user.password === "") {
+            alert("Se deben llenar todos los datos para continuar")
+            return
         }
         else {
-            alert("No se pudo completar el registro. Intente despues")
+            let result = await actions.signup(user)
+
+
+            if (result == 400) {
+                alert("Este usuario ya existe")
+            }
+            else if (result == 201) {
+                alert("Registro exitoso")
+                navigate("/login")
+            }
+            else {
+                alert("No se pudo completar el registro. Intente despues")
+            }
         }
     }
 
