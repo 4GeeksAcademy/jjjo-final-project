@@ -128,6 +128,8 @@ def user_population():
                 last_name=user["last_name"],
                 username=user["username"],
                 email=user["email"],
+                description = user["description"],
+                
                 password=password,
                 salt=salt,
             )
