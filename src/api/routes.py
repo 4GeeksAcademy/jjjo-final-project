@@ -130,7 +130,7 @@ def add_favorites_users(instructor_id):
 
     user = User.query.get(instructor_id)
     if user is None:
-        return jsonify({"Message":"This user does not exist"}), 404
+git        return jsonify({"Message":"This user does not exist"}), 404
     
     if favorites is not None:
         return jsonify({"Message":"This favorite alredy exist"}), 400
