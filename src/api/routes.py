@@ -181,6 +181,9 @@ def user_population():
                 last_name=user["last_name"],
                 username=user["username"],
                 email=user["email"],
+                description = user["description"],
+                rol = user["rol"],
+                
                 password=password,
                 salt=salt,
             )
@@ -189,7 +192,7 @@ def user_population():
                 db.session.commit()
             except Exception as error:
                 print("error:", error.args)
-                return jsonify("rodo fallo"), 500
+                return jsonify("todo fallo"), 500
         
     return jsonify("todo funciono"), 200
 
