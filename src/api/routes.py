@@ -42,6 +42,17 @@ def handle_hello():
 #         user_list.append(item.serialize())
 #     return jsonify(user_list), 200 
 
+@api.route ('/user', methods=['GET'])
+@jwt_required()
+def get_user():
+    id = get_jwt_identity()["user_id"]
+    user = User.query.get(id)
+    print(user)
+    # user = user.query.get(id)
+    if user is None:
+        return ({"message": "user doesn't exist"})
+    return jsonify((user.serialize())), 200
+
 @api.route('/signup', methods=['POST'])
 def signup(): #Capaz poner un nombre mas intuitivo
     body = request.json
