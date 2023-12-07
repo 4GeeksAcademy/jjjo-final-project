@@ -205,6 +205,7 @@ smtp_port = os.getenv("SMTP_PORT")
 email_address = os.getenv("EMAIL_ADDRESS")
 email_password = os.getenv("EMAIL_PASSWORD")
 
+
 def email_function(subject, recipient, message):
     # Asunto del correo (El \n es una salto de linea  de la libreria. Lo usamos para poder integrar mas parametros)
 # Ese reply acalara en el apartado para mi de gmail
@@ -213,17 +214,17 @@ def email_function(subject, recipient, message):
     try:
         server = smtplib.SMTP(smtp_address, smtp_port)
         server.starttls()
-        server.login(email_address, email_password)
+        server.login("tumentorenlinea1@gmail.com", "ytirjlqnjrmnylyk")
         # (1er parametro es el email que envia, 2do parametro email que lo recibe y 3er parametro es el mensaje)
-        server.sendmail(os.getenv("EMAIL_ADDRESS"), recipient, message)
+        server.sendmail("tumentorenlinea1@gmail.com", recipient, message)
         server.quit()
         print ("Se envio el mensage")
-        return jsonify ({"Email sent"}), 200
+        return True
     
     except Exception as error:
-        print(error)
+        print(error.args)
         print("aqui entra el error")
-        return jsonify({"We are working to fix the bug"}), 500
+        return False
 
 
 @api.route("/sendemail", methods=["POST"])
