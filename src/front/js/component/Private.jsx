@@ -19,7 +19,7 @@ export const Private = () => {
                             <button class="nav-link active p-2 m-2"> Informacion general </button>
                         </Link>
                         <Link to="/user/background">
-                            <button class="nav-link active p-2 m-2" > Antecedentes y Experiencia </button>
+                            <button class="nav-link active p-2 m-2" > ¿Quieres ser profesor? </button>
                         </Link>
                     </ul>
                 </div>

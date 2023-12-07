@@ -10,6 +10,7 @@ import injectContext from "./store/appContext";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import { Private } from "./component/Private.jsx"
+import { Subject } from "./component/Subject.jsx";
 import Login from "./component/Login.jsx";
 import Signup from "./component/Signup.jsx";
 import Following from "./component/Following.jsx"
@@ -40,6 +41,7 @@ const Layout = () => {
                         <Route element={<Background />} path="/user/background" />
                         <Route element={<Readmore />} path="/readmore" />
                         <Route element={<Aboutus />} path="/aboutus" />
+                        <Route element={<Subject />} path="/:nature" />
                         <Route element={<h1>Not found!</h1>} />
 
                     </Routes>
