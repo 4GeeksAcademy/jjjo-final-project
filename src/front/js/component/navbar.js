@@ -56,7 +56,7 @@ export const Navbar = () => {
 
 			<nav className="navbar navbar-expand-lg navbar-light bg-secondary">
 				<div className="container-fluid">
-					<Link to="/home">
+					<Link to="/">
 						<img className="my-img p-2" src="https://thumb.ac-illust.com/95/95047e9694b2c4c9367ad8e73aae7647_w.jpeg" alt="A person studying"></img>
 					</Link>
 					<button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
