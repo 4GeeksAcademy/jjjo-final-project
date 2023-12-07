@@ -10,6 +10,7 @@ from base64 import b64encode
 import os
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 import json 
+import smtplib 
 
 api = Blueprint('api', __name__)
 
@@ -193,4 +194,47 @@ def user_population():
         
     return jsonify("todo funciono"), 200
 
+
+#Variables y funcion para enviar emails
+
+# Protocolo y puerto
+smtp_address = os.getenv("SMTP_ADDRESS")
+smtp_port = os.getenv("SMTP_PORT")
+
+# Datos de nuestra app
+email_address = os.getenv("EMAIL_ADDRESS")
+email_password = os.getenv("EMAIL_PASSWORD")
+
+def email_function(subject, recipient, message):
+    # Asunto del correo (El \n es una salto de linea  de la libreria. Lo usamos para poder integrar mas parametros)
+# Ese reply acalara en el apartado para mi de gmail
+    message = f"Subject: {subject}\nReply-To: {recipient}\nFrom: {recipient}\nTo:{recipient}\n{message}"
+
+    try:
+        server = smtplib.SMTP(smtp_address, smtp_port)
+        server.starttls()
+        server.login(email_address, email_password)
+        # (1er parametro es el email que envia, 2do parametro email que lo recibe y 3er parametro es el mensaje)
+        server.sendmail(os.getenv("EMAIL_ADDRESS"), recipient, message)
+        server.quit()
+        print ("Se envio el mensage")
+        return jsonify ({"Email sent"}), 200
+    
+    except Exception as error:
+        print(error)
+        print("aqui entra el error")
+        return jsonify({"We are working to fix the bug"}), 500
+
+
+@api.route("/sendemail", methods=["POST"])
+def send_email():
+    body = request.json
+    result = email_function(body.get("subject"), body.get("recipient"), body.get("message"))
+
+    if result == True:
+        return jsonify("Email sent"), 200
+    
+    else:
+        return jsonify("There was an error. The email was not sent"), 500 
+    
 
