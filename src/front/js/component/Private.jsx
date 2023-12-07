@@ -30,7 +30,7 @@ export const Private = () => {
                             {/* <p className="card-text">{store.user.location}</p> */}
                             <h1 className="card-title">{store.user.name}  {store.user.last_name} </h1>
                             <h5 className="p-3 mb-2 bg-secondary text-white bg-opacity-75 rounded">Nombre de Usuario</h5>
-                            <p className="card-text">{store.user.username}</p>
+                            <p className="card-text">{store.user.username} </p>
                             <h5 className="p-3 mb-2 bg-secondary text-white bg-opacity-75 rounded">Correo electrónico</h5>
                             <p className="card-text">{store.user.email}</p>
                             <h5 className="p-3 mb-2 bg-secondary text-white bg-opacity-75 rounded">Un poco mas sobre mi...</h5>
