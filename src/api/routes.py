@@ -130,7 +130,7 @@ def add_favorites_users(instructor_id):
 
     user = User.query.get(instructor_id)
     if user is None:
-git        return jsonify({"Message":"This user does not exist"}), 404
+        return jsonify({"Message":"This user does not exist"}), 404
     
     if favorites is not None:
         return jsonify({"Message":"This favorite alredy exist"}), 400
@@ -182,6 +182,7 @@ def user_population():
                 username=user["username"],
                 email=user["email"],
                 description = user["description"],
+                rol = user["rol"],
                 
                 password=password,
                 salt=salt,
@@ -191,7 +192,7 @@ def user_population():
                 db.session.commit()
             except Exception as error:
                 print("error:", error.args)
-                return jsonify("rodo fallo"), 500
+                return jsonify("todo fallo"), 500
         
     return jsonify("todo funciono"), 200
 

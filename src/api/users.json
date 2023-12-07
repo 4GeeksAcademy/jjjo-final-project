@@ -5,7 +5,8 @@
         "username": "einstein",
         "email": "einstein@email.com",
         "password": "123456",
-        "description": "Soy un físico teórico alemán. Soy considerado uno de los científicos más influyentes del siglo XX. Soy el padre de la relatividad general y tengo un premio nobel en física por mi explicación fotoeléctrico"
+        "description": "Soy un físico teórico alemán. Soy considerado uno de los científicos más influyentes del siglo XX. Soy el padre de la relatividad general y tengo un premio nobel en física por mi explicación fotoeléctrico",
+        "rol": "instructor"
     },
     {
         "name": "Isaac",
@@ -13,7 +14,8 @@
         "username": "newton",
         "email": "newton@email.com",
         "password": "123456",
-        "description": "Soy un físico teórico y matemático inglés. Desarrolle la ley de gravitación universal y establecí las bases de la mecánica clásica. Adicionalmente, contribuí al desarrollo del cálculo diferencial e integral."
+        "description": "Soy un físico teórico y matemático inglés. Desarrolle la ley de gravitación universal y establecí las bases de la mecánica clásica. Adicionalmente, contribuí al desarrollo del cálculo diferencial e integral.",
+        "rol": "instructor"
     },
     {
         "name": "Robert",
@@ -21,7 +23,8 @@
         "username": "oppenheimer",
         "email": "oppenheimer@email.com",
         "password": "123456",
-        "description": "Soy un físico teorico estadounidense. Soy uno de los padres de la bomba atómica"
+        "description": "Soy un físico teorico estadounidense. Soy uno de los padres de la bomba atómica",
+        "rol": "instructor"
     },
     {
         "name": "Marie",
@@ -29,7 +32,8 @@
         "username": "curie",
         "email": "curie@email.com",
         "password": "123456",
-        "description": "Soy una física y química polaca. Soy una pionera en el campo de la radioactividad. Soy la única persona en recibir dos premios nobel en áreas distintas: Física y Química"
+        "description": "Soy una física y química polaca. Soy una pionera en el campo de la radioactividad. Soy la única persona en recibir dos premios nobel en áreas distintas: Física y Química",
+        "rol": "instructor"
     },
     {
         "name": "Dmitri",
@@ -37,7 +41,8 @@
         "username": "medeleyev",
         "email": "medeleyev@email.com",
         "password": "123456",
-        "description": "Soy un químico ruso. Soy el descubridor de la primera versión de la tabla periódica"
+        "description": "Soy un químico ruso. Soy el descubridor de la primera versión de la tabla periódica",
+        "rol": "instructor"
     },
     {
         "name": "John",
@@ -45,7 +50,8 @@
         "username": "dalton",
         "email": "dalton@email.com",
         "password": "123456",
-        "description": "Soy un matemático y químico inglés. Propuse un modelo atómico y contribuí a sentar las bases de la química moderna."
+        "description": "Soy un matemático y químico inglés. Propuse un modelo atómico y contribuí a sentar las bases de la química moderna.",
+        "rol": "instructor"
     },
     {
         "name": "Gregor",
@@ -53,7 +59,8 @@
         "username": "mendel",
         "email": "mendel@email.com",
         "password": "123456",
-        "description": "Soy un naturalista nacido en la República Checa. Soy el padre de la genética moderna."
+        "description": "Soy un naturalista nacido en la República Checa. Soy el padre de la genética moderna.",
+        "rol": "instructor"
     }, 
     {
         "name": "Charles",
@@ -61,7 +68,8 @@
         "username": "darwin",
         "email": "darwin@email.com",
         "password": "123456",
-        "description": "Soy un naturalista inglés. Soy reconocido como el científico más influyente de los que planteamos la teoría de la evolución basada en la selección natural."
+        "description": "Soy un naturalista inglés. Soy reconocido como el científico más influyente de los que planteamos la teoría de la evolución basada en la selección natural.",
+        "rol": "instructor"
     },
     {
         "name": "Alan",
@@ -69,6 +77,7 @@
         "username": "turing",
         "email": "turing@email.com",
         "password": "123456",
-        "description": "Soy un matématico, lógico e infórmatico teórico inglés. Soy reconocido como uno de los padres de las ciencias de la computación y pionero de la informática moderna."
+        "description": "Soy un matématico, lógico e infórmatico teórico inglés. Soy reconocido como uno de los padres de las ciencias de la computación y pionero de la informática moderna.",
+        "rol": "instructor"
     }        
     ]
