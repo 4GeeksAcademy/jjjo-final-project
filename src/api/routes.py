@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Favorites
+from api.models import db, User, Favorites, Subject
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -23,6 +23,7 @@ def check_password(hash_password, password, salt): ## Agregue el salt como param
 CORS(api)
 
 user_path = os.path.join(os.path.dirname(__file__), "users.json") ##ruta 
+subject_path = os.path.join(os.path.dirname(__file__), "subject.json") ##ruta 
 
 @api.route('/hello', methods=['POST', 'GET'])
 def handle_hello():
@@ -167,7 +168,7 @@ def delete_favorite(instructor_id, student_id):
         return jsonify({"Message":f"{error}"}), 500
     
 
-###Endpoint to populate the DB
+###Endpoint to populate the DB (users)
 @api.route("/user-population", methods=["GET"])
 def user_population():
     with open(user_path, "r") as file:
@@ -196,4 +197,23 @@ def user_population():
         
     return jsonify("todo funciono"), 200
 
+###Endpoint to populate the DB (subjects)
+@api.route("/subject-population", methods=["GET"])
+def subject_population():
+    with open(subject_path, "r") as file:
+        data = json.load(file)
+        file.close
+        for subject in data:
+            subject = Subject(
+                name=subject["name"],
+                description=subject["description"],
+            )
+            db.session.add(subject)
+            try:
+                db.session.commit()
+            except Exception as error:
+                print("error:", error.args)
+                return jsonify("todo fallo"), 500
+        
+    return jsonify("todo funciono"), 200
 
