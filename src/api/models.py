@@ -5,7 +5,7 @@ db = SQLAlchemy()
 
 class UserRol(Enum):
     admin='admin',
-    general='general'
+    general='general',
     instructor='instructor'
 
 class User(db.Model):
@@ -57,8 +57,8 @@ class Subject(db.Model):
     def serialize(self):
         return{
             "id": self.id,
-            "name": self.physics,
-            "description": self.mathematics,
+            "name": self.name,
+            "description": self.description,
         }   
 
 class Favorites_subject(db.Model): ##this is a pivot table 
