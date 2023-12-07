@@ -4,11 +4,17 @@
 .my-img {
     width: 100px;
     height: 80px;
-
-    
-    
 }
+
+.subject-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .my-profile-img {
-    width: 300px;
-    height: 400px;
+    width: 450px;
+    height: 300px;
 }
