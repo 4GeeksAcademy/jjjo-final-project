@@ -18,7 +18,8 @@ class User(db.Model):
     salt = db.Column(db.String(200), unique=False, nullable=False)
     rol = db.Column(db.Enum(UserRol),unique=False,nullable=False, default="general")
     description = db.Column(db.Text, unique=False, nullable=True)
-    favorites = db.relationship("Favorites", uselist=True, backref="user") ### relationship to favorite table
+    favorites = db.relationship("Favorites", uselist=True, backref="student", foreign_keys="Favorites.student_id" ) ### relationship to favorite table
+    favorites = db.relationship("Favorites", uselist=True, backref="instructor", foreign_keys="Favorites.instructor_id" ) ### relationship to favorite table
     courses = db.relationship("Favorites_subject", uselist=True, backref="user") ### relationship to pivot table to add users
 
     def __repr__(self):
