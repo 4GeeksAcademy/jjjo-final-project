@@ -15,6 +15,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			],
 			token: localStorage.getItem("token") || null,
+			favorites: [],
 			user: {}
 		},
 		actions: {
@@ -75,6 +76,23 @@ const getState = ({ getStore, getActions, setStore }) => {
 				localStorage.removeItem("token")
 			},
 
+			addFavorite: (itemToSave) => {
+				let store = getStore()
+				let exists = store.favorites.some((item) => item.id == itemToSave.id)
+				if (exists) {
+					let newArr = store.favorites.filter((item) => item.id != itemToSave.id)
+
+					setStore({
+						favorites: newArr
+					})
+				} else {
+					setStore({
+						favorites: [...store.favorites, itemToSave]
+					})
+				}
+
+			},
+
 			getLogedUser: async () => {
 				const store = getStore()
 				let response = await fetch(`${process.env.BACKEND_URL}/user`, {
@@ -85,6 +103,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				})
 				console.log(response)
 				let data = await response.json()
+				console.log(data)
 				if (response.ok) {
 					setStore(
 						{
