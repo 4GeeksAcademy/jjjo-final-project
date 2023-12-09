@@ -42,6 +42,7 @@ def handle_hello():
 #         user_list.append(item.serialize())
 #     return jsonify(user_list), 200 
 
+# Endpoint para traer la informacion de un usuario en linea
 @api.route ('/user', methods=['GET'])
 @jwt_required()
 def get_user():
@@ -53,6 +54,7 @@ def get_user():
         return ({"message": "user doesn't exist"})
     return jsonify((user.serialize())), 200
 
+### Endpoint para crear un usuario 
 @api.route('/signup', methods=['POST'])
 def signup(): #Capaz poner un nombre mas intuitivo
     body = request.json
@@ -94,6 +96,7 @@ def signup(): #Capaz poner un nombre mas intuitivo
 
 @api.route('/login',methods=['POST'])
 
+## Endpoint para ingresar un usuario (crea un token)
 def login(): #Capaz poner un nombre mas intuitivo
     body = request.json
     email = body.get("email")
@@ -113,7 +116,7 @@ def login(): #Capaz poner un nombre mas intuitivo
                 return jsonify({"Message":"Datos incorrectos"}), 400
             
             
-# Un metodo get para comprobar que los favoritos del usurio se estan creando
+# Un metodo get para comprobar que los favoritos del usuario se estan creando
 @api.route ('user/favorites', methods=['GET'])
 @jwt_required()
 def get_user_favorites():
@@ -131,6 +134,8 @@ def get_user_favorites():
     for item in favorites:
         favorites_list.append(item.serialize())
     return jsonify(favorites_list), 200
+
+
 
 
 # End point para crear favoritos
@@ -177,9 +182,62 @@ def delete_favorite(instructor_id, student_id):
     except Exception as error:
         db.session.rollback()
         return jsonify({"Message":f"{error}"}), 500
-    
 
-###Endpoint to populate the DB (users)
+### Endpoint para modificar la información de un usuario
+@api.route('/user',methods=['PUT'])
+@jwt_required()
+def update_user():
+
+    ## Buscamos el usuario que queremos actualizar
+    user_id = get_jwt_identity()["user_id"] ## Usuario a editar
+
+    ## Obtener la informacion del body
+    data = request.json
+
+    name = data.get("name")
+    lastname = data.get("last_name")
+    username = data.get("username",None)
+    email = data.get("email",None)
+    password = data.get("password",None)
+    description = data.get("description",None)
+    rol = data.get("rol",None)
+
+    # Creamos una instancia del usuario
+
+    user = User.query.get(user_id)
+
+    #Verificamos que los campos no sean nulos y que no sean un string vacio
+    #Pendiente verificar por ejemplo que los campos no sea un string con uno o mas espacios! (esto capaz es mas facil hacerlo desde el FE)
+
+    if name is not None and name != "": 
+        user.name = name
+    if lastname is not None and lastname != "": 
+        user.last_name = lastname
+    if username is not None and username != "": 
+        user.username = username
+    if email is not None and email != "":
+        user.email = email
+    if description is not None and description !="":
+        user.description = description
+    if rol is not None and rol != "":
+        user.rol = rol
+
+    ## Contraseña nueva con hash y salt
+    if password is not None and password != "":
+        user.password = set_password(password, user.salt)
+
+    try:
+        db.session.commit()
+        return jsonify({"message": "usuario actualizado"})
+    except Exception as error:
+        db.session.rollback()
+        return error 
+    
+    
+#### Endpoints para crear datos en nuestras tablas    
+
+
+###Endpoint para crear usuarios en la base de datos (users)
 @api.route("/user-population", methods=["GET"])
 def user_population():
     with open(user_path, "r") as file:
@@ -208,7 +266,7 @@ def user_population():
         
     return jsonify("todo funciono"), 200
 
-###Endpoint to populate the DB (subjects)
+###Endpoint para crear materias en la base de datos (subjects)
 @api.route("/subject-population", methods=["GET"])
 def subject_population():
     with open(subject_path, "r") as file:
