@@ -11,6 +11,10 @@ import os
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 import json 
 import smtplib 
+import smtplib , ssl
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+import cloudinary.uploader as uploader 
 
 api = Blueprint('api', __name__)
 
@@ -240,36 +244,64 @@ email_address = os.getenv("EMAIL_ADDRESS")
 email_password = os.getenv("EMAIL_PASSWORD")
 
 
-def email_function(subject, recipient, message):
+def email_function(subject, recipient, body):
     # Asunto del correo (El \n es una salto de linea  de la libreria. Lo usamos para poder integrar mas parametros)
-# Ese reply acalara en el apartado para mi de gmail
-    message = f"Subject: {subject}\nReply-To: {recipient}\nFrom: {recipient}\nTo:{recipient}\n{message}"
-
+    # Ese reply acalara en el apartado para mi de gmail
+    # message = f"Subject: {subject}\nReply-To: {recipient}\nFrom: {recipient}\nTo:{recipient}\n{message}"
+    message = MIMEMultipart("alternative")
+    message["Subject"] = subject
+    message["From"] = email_address
+    message["To"] = recipient
+    html = '''
+        <html>
+        <body>
+        <div>
+        <p>
+        Estás recibiendo este correo porque hiciste una solicitud de recuperación de contraseña para tu cuenta
+        </p>
+        ''' + body + '''   
+        <p>
+        -TuMentorEnLinea
+        </p>
+        </div>
+        </body>
+        </html>
+    '''
+    html_mime = MIMEText(html, 'html')
+    #adjuntamos el código html al mensaje
+    message.attach(html_mime)
     try:
-        server = smtplib.SMTP(smtp_address, smtp_port)
-        server.starttls()
-        server.login("tumentorenlinea1@gmail.com", "ytirjlqnjrmnylyk")
-        # (1er parametro es el email que envia, 2do parametro email que lo recibe y 3er parametro es el mensaje)
-        server.sendmail("tumentorenlinea1@gmail.com", recipient, message)
-        server.quit()
-        print ("Se envio el mensage")
+        # server = smtplib.SMTP(smtp_address, smtp_port)
+        # server.starttls()
+        # server.login("tumentorenlinea1@gmail.com", "ytirjlqnjrmnylyk")
+        # # (1er parametro es el email que envia, 2do parametro email que lo recibe y 3er parametro es el mensaje)
+        # message = message.encode('utf-8')
+        # server.sendmail(email_address,recipient, message)
+        # server.quit()
+        # print ("Se envio el mensage")
+        # return True
+        print("me ejecuto en el endpoint en enviar mensaje")
+        context = ssl.create_default_context()
+        with smtplib.SMTP_SSL(smtp_address, smtp_port, context=context) as server:
+            server.login(email_address, email_password)
+            server.sendmail(email_address, recipient, message.as_string())
+            print("me ejecuto")
         return True
     
     except Exception as error:
         print(error.args)
         print("aqui entra el error")
         return False
-
-
+  
 @api.route("/sendemail", methods=["POST"])
 def send_email():
     body = request.json
-    result = email_function(body.get("subject"), body.get("recipient"), body.get("message"))
-
+    result = email_function(body.get('subject'), body.get("to"), body.get("message"))
+    print("Entre en el endpoint")
+    print(result)
     if result == True:
         return jsonify("Email sent"), 200
     
     else:
-        return jsonify("There was an error. The email was not sent"), 500 
-    
+        return jsonify("There was an error. The email was not sent"), 500
 
