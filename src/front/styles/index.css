@@ -3,12 +3,12 @@
 */
 .my-img {
     width: 100px;
-    height: 80px;
+    height: 100px;
 }
 
 .subject-img {
     width: 100%;
-    height: auto;
+    max-height: 300px;
     display: block;
     margin-left: auto;
     margin-right: auto;

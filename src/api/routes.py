@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Favorites, Subject
+from api.models import db, User, Favorites, Subject, Favorites_subject
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -10,6 +10,7 @@ from base64 import b64encode
 import os
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 import json 
+
 
 api = Blueprint('api', __name__)
 
@@ -118,6 +119,7 @@ def login(): #Capaz poner un nombre mas intuitivo
 @jwt_required()
 def get_user_favorites():
     student_id = get_jwt_identity()["user_id"]
+    print(student_id)
     if student_id is None:
         return jsonify({"Message":"This user does not exist"}), 404
     
@@ -227,4 +229,10 @@ def subject_population():
                 return jsonify("todo fallo"), 500
         
     return jsonify("todo funciono"), 200
+
+@api.route ('/subject/<int:subject_id>', methods=['GET'])
+def get_teachers(subject_id):
+    subject = Favorites_subject()
+    subject = subject.query.filter_by(subject_id = subject_id).all()
+    return jsonify(list(map(lambda item : item.serialize(), subject))), 200
 
