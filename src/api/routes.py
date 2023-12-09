@@ -202,28 +202,30 @@ def update_user():
     description = data.get("description",None)
     rol = data.get("rol",None)
 
+    #name = name.strip()
+
     # Creamos una instancia del usuario
 
     user = User.query.get(user_id)
 
     #Verificamos que los campos no sean nulos y que no sean un string vacio
-    #Pendiente verificar por ejemplo que los campos no sea un string con uno o mas espacios! (esto capaz es mas facil hacerlo desde el FE)
-
-    if name is not None and name != "": 
+    #Pendiente verificar por ejemplo que los campos no sea un string con uno o mas espacios! (Listo)
+  
+    if name is not None and name != "" and name.isspace() == False: 
         user.name = name
-    if lastname is not None and lastname != "": 
+    if lastname is not None and lastname != "" and lastname.isspace() == False: 
         user.last_name = lastname
-    if username is not None and username != "": 
+    if username is not None and username != "" and username.isspace() == False: 
         user.username = username
-    if email is not None and email != "":
+    if email is not None and email != "" and email.isspace() == False:
         user.email = email
-    if description is not None and description !="":
+    if description is not None and description !=""  and description.isspace() == False:
         user.description = description
-    if rol is not None and rol != "":
+    if rol is not None and rol != "" and rol.isspace() == False:
         user.rol = rol
 
     ## Contraseña nueva con hash y salt
-    if password is not None and password != "":
+    if password is not None and password != "" and  password.isspace() == False:
         user.password = set_password(password, user.salt)
 
     try:
