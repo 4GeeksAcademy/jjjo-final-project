@@ -344,7 +344,7 @@ def email_function(subject, recipient, body):
     try:
         # server = smtplib.SMTP(smtp_address, smtp_port)
         # server.starttls()
-        # server.login("tumentorenlinea1@gmail.com", "ytirjlqnjrmnylyk")
+        # server.login("email_address", "email_password")
         # # (1er parametro es el email que envia, 2do parametro email que lo recibe y 3er parametro es el mensaje)
         # message = message.encode('utf-8')
         # server.sendmail(email_address,recipient, message)
