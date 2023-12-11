@@ -15,6 +15,8 @@ class User(db.Model):
     username  = db.Column(db.String(20), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(200), unique=False, nullable=False)
+    avatar = db.Column(db.String(200), unique=False, nullable=True)
+    public_id_avatar = db.Column(db.String(100), unique=False, nullable=False)
     salt = db.Column(db.String(200), unique=False, nullable=False)
     rol = db.Column(db.Enum(UserRol),unique=False,nullable=False, default="general")
     description = db.Column(db.Text, unique=False, nullable=True)
@@ -32,8 +34,9 @@ class User(db.Model):
             "email": self.email,
             "name": self.name, 
             "last_name" : self.last_name,
-            "description" : self.description
-            
+            "description" : self.description,
+            "avatar" : self.avatar,
+            "public_id_avatar": self.public_id_avatar
             # do not serialize the password, its a security breach
         }
     

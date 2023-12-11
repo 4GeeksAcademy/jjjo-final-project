@@ -305,3 +305,31 @@ def send_email():
     else:
         return jsonify("There was an error. The email was not sent"), 500
 
+
+
+@api.route("/user/avatar", methods=["POST"])
+def post_avatar():
+    data_file= request.files 
+
+    data = {
+        "avatar": data_file.get("avatar")
+    }
+
+    avatar= data_file.get("avatar")
+
+    result = uploader.upload(data.get("avatar"))
+
+    data.update({"avatar":result.get("secure_url")})
+    data.update({"public_id_avatar":result.get("secure_url")})
+    # print(result)
+
+    # Llamamos a la tabla user y guardamos los datos del avatar
+
+    user = User(avatar = data.get("avatar"), public_id_avatar = data.get("public_id_avatar"))
+    try:
+        db.session.add(user)
+        db.session.commit()
+        return jsonify({"Message":"Avatar uploaded successfully"}), 201
+    except Exception as error:
+        print(error)
+        return jsonify({"Message":"Image upload failed"}), 500  
