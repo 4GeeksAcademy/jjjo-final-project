@@ -41,7 +41,7 @@ const Layout = () => {
                         <Route element={<Background />} path="/user/background" />
                         <Route element={<Readmore />} path="/readmore" />
                         <Route element={<Aboutus />} path="/aboutus" />
-                        <Route element={<Subject />} path="/:nature" />
+                        <Route element={<Subject />} path="/:nature/:id" />
                         <Route element={<h1>Not found!</h1>} />
 
                     </Routes>

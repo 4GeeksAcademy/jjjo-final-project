@@ -29,11 +29,11 @@ export const Navbar = () => {
 									Materias
 								</a>
 								<ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-									<li><a className="dropdown-item" href="/math">Matemáticas</a></li>
-									<li><a className="dropdown-item" href="/chemistry">Química</a></li>
-									<li><a className="dropdown-item" href="/physics">Física</a></li>
-									<li><a className="dropdown-item" href="/biology">Biologia</a></li>
-									<li><a className="dropdown-item" href="/coding">Programación</a></li>
+									<li><Link className="dropdown-item" to="/math/5">Matemáticas</Link></li>
+									<li><Link className="dropdown-item" to="/chemistry/1">Química</Link></li>
+									<li><Link className="dropdown-item" to="/physics/2">Física</Link></li>
+									<li><Link className="dropdown-item" to="/biology/3">Biologia</Link></li>
+									<li><Link className="dropdown-item" to="/coding/4">Programación</Link></li>
 									<li><hr className="dropdown-divider" /></li>
 									<li><a className="dropdown-item" href="#">¿Buscas un tema diferente?</a></li>
 								</ul>
@@ -70,15 +70,16 @@ export const Navbar = () => {
 									Materias
 								</a>
 								<ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-									<li><a className="dropdown-item" href="/math">Matemáticas</a></li>
-									<li><a className="dropdown-item" href="/chemistry">Química</a></li>
-									<li><a className="dropdown-item" href="/physics">Física</a></li>
-									<li><a className="dropdown-item" href="/biology">Biologia</a></li>
-									<li><a className="dropdown-item" href="/coding">Programación</a></li>
+									<li><Link className="dropdown-item" to="/math/5">Matemáticas</Link></li>
+									<li><Link className="dropdown-item" to="/chemistry/1">Química</Link></li>
+									<li><Link className="dropdown-item" to="/physics/2">Física</Link></li>
+									<li><Link className="dropdown-item" to="/biology/3">Biologia</Link></li>
+									<li><Link className="dropdown-item" to="/coding/4">Programación</Link></li>
 									<li><hr className="dropdown-divider" /></li>
 									<li><a className="dropdown-item" href="#">¿Buscas un tema diferente?</a></li>
 								</ul>
 							</li>
+
 						</ul>
 						{/* <form className="d-flex">
 						<input className="form-control me-2" type="search" placeholder="¿Qué buscas?" aria-label="Search" />
@@ -92,8 +93,8 @@ export const Navbar = () => {
 								{
 									store.favorites.map((item) => {
 										return (
-											<li key={item._id} className="d-flex justify-content-between align-items-center">
-												<p className="dropdown-item my-1">{item.properties.name}</p><i onClick={() => actions.deleteFavorite(item)} className="fa-solid fa-trash mx-2"></i>
+											<li key={item.instructor_id?.id} className="d-flex justify-content-between align-items-center">
+												<p className="dropdown-item my-1">{`${item.instructor_id?.name} ${item.instructor_id?.last_name}`}</p><i onClick={() => actions.deleteFavorite(item)} className="fa-solid fa-trash mx-2"></i>
 											</li>
 										)
 									})
