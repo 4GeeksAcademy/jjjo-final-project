@@ -375,4 +375,76 @@ def send_email():
     else:
         return jsonify("There was an error. The email was not sent"), 500
 
+# Endpoint para agregar materias a enseñar
 
+@api.route ('subjects/<int:subject_id>', methods=['POST'])
+@jwt_required()
+def add_favorites_subjects(subject_id):
+    user_id = get_jwt_identity()["user_id"]
+    subjects = Favorites_subject.query.filter_by(subject_id = subject_id, user_id = user_id).first()
+
+    user = User.query.get(user_id)
+    if user is None:
+        return jsonify({"Message":"This user does not exist"}), 404
+    
+    if subjects is not None:
+        return jsonify({"Message":"You already teach this subject"}), 400
+
+    add_subject = Favorites_subject(subject_id = subject_id, user_id = user_id)
+    db.session.add(add_subject)
+
+    try:
+        db.session.commit()
+        return  jsonify({"Message":"The subject was added"}), 200
+
+    except Exception as error:
+        db.session.rollback()
+        return jsonify({"Message":f"{error}"}), 500
+    
+
+# Un metodo get para traer las materias que los usuarios desean enseñar
+@api.route ('subjects/subjects', methods=['GET'])
+@jwt_required()
+def get_user_subjects():
+    user_id = get_jwt_identity()["user_id"]
+    print(user_id)
+    if user_id is None:
+        return jsonify({"Message":"This user does not exist"}), 404
+    
+    subjects = Favorites_subject.query.filter_by(user_id=user_id).all()
+
+    if subjects is None:
+        return jsonify({"Message":"This user teaches no subjects"}), 404
+    
+    subject_list = []
+
+    for item in subjects:
+        subject_list.append(item.serialize())
+    return jsonify(subject_list), 200
+
+    # End point para borrar materias que no se desean enseñar
+@api.route ('subjects/<int:subject_id>', methods=['DELETE'])
+@jwt_required()
+def delete_subject(subject_id):
+    user_id = get_jwt_identity()["user_id"]
+    subject = Favorites_subject.query.filter_by(subject_id = subject_id, user_id = user_id).first()
+
+    if subject is None:
+        return jsonify({"Message":"This subject does not exist"}), 404
+    
+    try:
+        db.session.delete(subject)
+        db.session.commit()
+        return jsonify({"Message":"You no longer teach this subject"}), 200
+    
+    except Exception as error:
+        db.session.rollback()
+        return jsonify({"Message":f"{error}"}), 500
+
+#End point para traer las materias a la vista privada de profesores
+
+@api.route ('subjects/all', methods=['GET'])
+def get_subjects():
+    subject = Subject()
+    subject = subject.query.all()
+    return jsonify(list(map(lambda item : item.serialize(), subject))), 200

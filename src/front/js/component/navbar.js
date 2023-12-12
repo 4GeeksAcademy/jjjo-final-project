@@ -6,8 +6,6 @@ export const Navbar = () => {
 	const { store, actions } = useContext(Context)
 
 
-
-
 	return (
 		<>		{store.token == null ?
 
@@ -29,13 +27,13 @@ export const Navbar = () => {
 									Materias
 								</a>
 								<ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-									<li><Link className="dropdown-item" to="/math/5">Matemáticas</Link></li>
-									<li><Link className="dropdown-item" to="/chemistry/1">Química</Link></li>
-									<li><Link className="dropdown-item" to="/physics/2">Física</Link></li>
-									<li><Link className="dropdown-item" to="/biology/3">Biologia</Link></li>
-									<li><Link className="dropdown-item" to="/coding/4">Programación</Link></li>
-									<li><hr className="dropdown-divider" /></li>
-									<li><a className="dropdown-item" href="#">¿Buscas un tema diferente?</a></li>
+									<li className="d-flex justify-content-between align-items-center"><Link className="dropdown-item" to="/math/5">Matemáticas </Link><i className="fa-sharp fa-solid fa-square-root-variable mx-2"></i></li>
+									<li className="d-flex justify-content-between align-items-center"><Link className="dropdown-item" to="/chemistry/1">Química </Link><i className="fa-solid fa-flask-vial mx-2"></i></li>
+									<li className="d-flex justify-content-between align-items-center"><Link className="dropdown-item" to="/physics/2">Física </Link><i className="fa-solid fa-atom mx-2" ></i></li>
+									<li className="d-flex justify-content-between align-items-center"><Link className="dropdown-item" to="/biology/3">Biologia </Link><i className="fa-solid fa-dna mx-2"></i></li>
+									<li className="d-flex justify-content-between align-items-center"><Link className="dropdown-item" to="/coding/4">Programación </Link><i className="fa-solid fa-code mx-2"></i></li>
+									{/* <li><hr className="dropdown-divider" /></li>
+									<li><a className="dropdown-item" href="#">¿Buscas un tema diferente?</a></li> */}
 								</ul>
 							</li>
 						</ul>
@@ -70,13 +68,13 @@ export const Navbar = () => {
 									Materias
 								</a>
 								<ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-									<li><Link className="dropdown-item" to="/math/5">Matemáticas</Link></li>
-									<li><Link className="dropdown-item" to="/chemistry/1">Química</Link></li>
-									<li><Link className="dropdown-item" to="/physics/2">Física</Link></li>
-									<li><Link className="dropdown-item" to="/biology/3">Biologia</Link></li>
-									<li><Link className="dropdown-item" to="/coding/4">Programación</Link></li>
-									<li><hr className="dropdown-divider" /></li>
-									<li><a className="dropdown-item" href="#">¿Buscas un tema diferente?</a></li>
+									<li className="d-flex justify-content-between align-items-center"><Link className="dropdown-item" to="/math/5">Matemáticas </Link><i className="fa-sharp fa-solid fa-square-root-variable mx-2"></i></li>
+									<li className="d-flex justify-content-between align-items-center"><Link className="dropdown-item" to="/chemistry/1">Química </Link><i className="fa-solid fa-flask-vial mx-2"></i></li>
+									<li className="d-flex justify-content-between align-items-center"><Link className="dropdown-item" to="/physics/2">Física </Link><i className="fa-solid fa-atom mx-2" ></i></li>
+									<li className="d-flex justify-content-between align-items-center"><Link className="dropdown-item" to="/biology/3">Biologia </Link><i className="fa-solid fa-dna mx-2"></i></li>
+									<li className="d-flex justify-content-between align-items-center"><Link className="dropdown-item" to="/coding/4">Programación </Link><i className="fa-solid fa-code mx-2"></i></li>
+									{/* <li><hr className="dropdown-divider" /></li> */}
+									{/* <li><a className="dropdown-item" href="#">¿Buscas un tema diferente?</a></li> */}
 								</ul>
 							</li>
 
@@ -85,6 +83,9 @@ export const Navbar = () => {
 						<input className="form-control me-2" type="search" placeholder="¿Qué buscas?" aria-label="Search" />
 						<button className="btn btn-outline-dark" type="submit">Buscar</button>
 					</form> */}
+						<Link to="/user">
+							<h5 className="text-white mx-3"> Hola, {`${store.user.name}`}</h5>
+						</Link>
 						<div className="ml-auto">
 							<button className="btn btn-secondary dropdown-toggle bg-primary" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
 								Favoritos ({store.favorites.length})
