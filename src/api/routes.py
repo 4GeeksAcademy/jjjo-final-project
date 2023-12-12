@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Favorites, Subject
+from api.models import db, User, Favorites, Subject, Favorites_subject
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -10,6 +10,12 @@ from base64 import b64encode
 import os
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 import json 
+import smtplib 
+import smtplib , ssl
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+import cloudinary.uploader as uploader 
+
 
 api = Blueprint('api', __name__)
 
@@ -121,6 +127,7 @@ def login(): #Capaz poner un nombre mas intuitivo
 @jwt_required()
 def get_user_favorites():
     student_id = get_jwt_identity()["user_id"]
+    print(student_id)
     if student_id is None:
         return jsonify({"Message":"This user does not exist"}), 404
     
@@ -165,11 +172,11 @@ def add_favorites_users(instructor_id):
 
 
 # End point para borrar favoritos creados
-api.route ('favorites/user/<int:instructor_id>', methods=['DELETE'])
+@api.route ('favorites/<int:instructor_id>', methods=['DELETE'])
 @jwt_required()
-def delete_favorite(instructor_id, student_id):
+def delete_favorite(instructor_id):
     student_id = get_jwt_identity()["user_id"]
-    favorite = Favorites.query.filter_by(student_id=student_id, user_id=instructor_id).first()
+    favorite = Favorites.query.filter_by(student_id=student_id, instructor_id=instructor_id).first()
 
     if favorite is None:
         return jsonify({"Message":"This favorite does not exist"}), 404
@@ -177,7 +184,7 @@ def delete_favorite(instructor_id, student_id):
     try:
         db.session.delete(favorite)
         db.session.commit()
-        return jsonify({"Message":"This favorite was deleted"})
+        return jsonify({"Message":"This favorite was deleted"}), 200
     
     except Exception as error:
         db.session.rollback()
@@ -288,4 +295,85 @@ def subject_population():
                 return jsonify("todo fallo"), 500
         
     return jsonify("todo funciono"), 200
+
+# Endpoint para traer los profesores a la vista de materias
+@api.route ('/subject/<int:subject_id>', methods=['GET'])
+def get_teachers(subject_id):
+    subject = Favorites_subject()
+    subject = subject.query.filter_by(subject_id = subject_id).all()
+    return jsonify(list(map(lambda item : item.serialize(), subject))), 200
+
+#Variables y funcion para enviar emails
+
+# Protocolo y puerto
+smtp_address = os.getenv("SMTP_ADDRESS")
+smtp_port = os.getenv("SMTP_PORT")
+
+# Datos de nuestra app
+email_address = os.getenv("EMAIL_ADDRESS")
+email_password = os.getenv("EMAIL_PASSWORD")
+
+# Función para enviar un correo con un asunto, a un destinatario con un "body" predeterminado
+def email_function(subject, recipient, body):
+    # Asunto del correo (El \n es una salto de linea  de la libreria. Lo usamos para poder integrar mas parametros)
+    # Ese reply acalara en el apartado para mi de gmail
+    # message = f"Subject: {subject}\nReply-To: {recipient}\nFrom: {recipient}\nTo:{recipient}\n{message}"
+    message = MIMEMultipart("alternative")
+    message["Subject"] = subject
+    message["From"] = email_address
+    message["To"] = recipient
+    html = '''
+        <html>
+        <body>
+        <div>
+        <p>
+        Estás recibiendo este correo porque hiciste una solicitud de recuperación de contraseña para tu cuenta
+        </p>
+        ''' + body + '''   
+        <p>
+        -TuMentorEnLinea
+        </p>
+        </div>
+        </body>
+        </html>
+    '''
+    html_mime = MIMEText(html, 'html')
+    #adjuntamos el código html al mensaje
+    message.attach(html_mime)
+    try:
+        # server = smtplib.SMTP(smtp_address, smtp_port)
+        # server.starttls()
+        # server.login("tumentorenlinea1@gmail.com", "ytirjlqnjrmnylyk")
+        # # (1er parametro es el email que envia, 2do parametro email que lo recibe y 3er parametro es el mensaje)
+        # message = message.encode('utf-8')
+        # server.sendmail(email_address,recipient, message)
+        # server.quit()
+        # print ("Se envio el mensage")
+        # return True
+        print("me ejecuto en el endpoint en enviar mensaje")
+        context = ssl.create_default_context()
+        with smtplib.SMTP_SSL(smtp_address, smtp_port, context=context) as server:
+            server.login(email_address, email_password)
+            server.sendmail(email_address, recipient, message.as_string())
+            print("me ejecuto")
+        return True
+    
+    except Exception as error:
+        print(error.args)
+        print("aqui entra el error")
+        return False
+  
+# Endpoint para mandar un correo al usuario introducido en el body  
+@api.route("/sendemail", methods=["POST"])
+def send_email():
+    body = request.json
+    result = email_function(body.get('subject'), body.get("to"), body.get("message"))
+    print("Entre en el endpoint")
+    print(result)
+    if result == True:
+        return jsonify("Email sent"), 200
+    
+    else:
+        return jsonify("There was an error. The email was not sent"), 500
+
 
