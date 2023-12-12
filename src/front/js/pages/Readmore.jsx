@@ -7,22 +7,28 @@ export const Readmore = () => {
   const { store, actions } = useContext(Context);
 
   return (
-    <div className="container d-flex flex-column">
+    <div className=" container d-flex justify-content-between align-items-center">
+      <img className="readmore-img mx-3" src="https://img.freepik.com/premium-photo/happy-teacher-using-her-tablet-pc_13339-165643.jpg" alt="woman teacher" />
       <div className="row">
-        <div className="col-6">
-          <h1 className="display-2 mb-5">Que es (Nombre de la app)?</h1>
+        <div className="col-12">
+          <h1 className="m-5">¿Qué es <strong>TuMentorEnLínea</strong>?</h1>
         </div>
         <div className="row">
-          <div className="col-12 border border-primary rounder m-3"><p className="m-3">
-            <h3>Objetivo de (Nombre de la App)</h3><p className="mt-3">(Nombre de la aplicacion) es una aplicacion con el fin de hacer mucho mas sencillo encontrar
-            profesores u alumnos, esta aplicacion funciona de manera que permite un contacto directo entre mentores y estufiantes de diferentes partes del mundo.</p> <br></br>
-            <h3 className="mt-3">Como funciona?</h3><br></br>
-            Al registrate como usuario podras ver los perfiles de otros dentro de la página web, dichos perfiles pueden pertenecer a profesores o estudiantes.
-            Los estudiantes tan solo necesitan un nombre de usuario, mail y su contraseña, por otro lado los profesores deberian proporcionar unos datos extra, esta informacion adicional
-            tan solo es para verificar en que materias tienen conocimiento, certificacciones o cualquier otro metodo que demuestre tu conocimiento y pueda dar una sensación de seguridad a los estudiantes.
-            <br></br>
-            Una vez completado tu registro como usurio puedes empezar a conectar con otros dentro de la página, sea como estudiante agendando sesiones con los profesores o como
-            profesor recibiendo solicitudes de estudiantes para recibir mentorias.</p></div>
+          <div className="col-12 border border-secondary rounder mb-4">
+            <h4>Objetivo de <strong>TuMentorEnLínea</strong></h4>
+            <p className="mt-3"><strong>TuMentorEnLínea</strong> es una aplicacion que busca facilitar el proceso de encontrar
+              profesores sobre temas específicos o alumnos potenciales para diferentes temas o materias. Esta aplicacion permite un contacto directo entre mentores y estudiantes de diferentes partes del mundo.</p> <br></br>
+          </div>
+          <div className="col-12 border border-secondary rounder mb-4">
+            <h4 className=" m-3">¿Cómo funciona?</h4>
+
+            <p>Al registrate como usuario podras ver los perfiles de otros usuarios, dichos perfiles pueden pertenecer a profesores o estudiantes.
+              Los estudiantes tan solo necesitan un nombre de usuario, mail y su contraseña. Por otro lado, los profesores deberán proporcionar unos datos extra, esta informacion adicional
+              tan solo es para verificar en que materias o áreas tienen conocimiento, certificacciones o cualquier otro método que demuestre su conocimiento. <br></br>
+              Una vez completado tu registro como usurio puedes empezar a conectar con otros usuarios dentro de la página, sea como estudiante contactando a los profesores o como
+              profesor recibiendo solicitudes de estudiantes para recibir mentorías.
+            </p>
+          </div>
         </div>
       </div>
     </div>
