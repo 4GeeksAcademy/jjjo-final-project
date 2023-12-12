@@ -10,6 +10,11 @@ from base64 import b64encode
 import os
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 import json 
+import smtplib 
+import smtplib , ssl
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+import cloudinary.uploader as uploader 
 
 
 api = Blueprint('api', __name__)
@@ -43,6 +48,7 @@ def handle_hello():
 #         user_list.append(item.serialize())
 #     return jsonify(user_list), 200 
 
+# Endpoint para traer la informacion de un usuario en linea
 @api.route ('/user', methods=['GET'])
 @jwt_required()
 def get_user():
@@ -54,6 +60,7 @@ def get_user():
         return ({"message": "user doesn't exist"})
     return jsonify((user.serialize())), 200
 
+### Endpoint para crear un usuario 
 @api.route('/signup', methods=['POST'])
 def signup(): #Capaz poner un nombre mas intuitivo
     body = request.json
@@ -95,6 +102,7 @@ def signup(): #Capaz poner un nombre mas intuitivo
 
 @api.route('/login',methods=['POST'])
 
+## Endpoint para ingresar un usuario (crea un token)
 def login(): #Capaz poner un nombre mas intuitivo
     body = request.json
     email = body.get("email")
@@ -114,7 +122,7 @@ def login(): #Capaz poner un nombre mas intuitivo
                 return jsonify({"Message":"Datos incorrectos"}), 400
             
             
-# Un metodo get para comprobar que los favoritos del usurio se estan creando
+# Un metodo get para comprobar que los favoritos del usuario se estan creando
 @api.route ('user/favorites', methods=['GET'])
 @jwt_required()
 def get_user_favorites():
@@ -133,6 +141,8 @@ def get_user_favorites():
     for item in favorites:
         favorites_list.append(item.serialize())
     return jsonify(favorites_list), 200
+
+
 
 
 # End point para crear favoritos
@@ -179,9 +189,64 @@ def delete_favorite(instructor_id):
     except Exception as error:
         db.session.rollback()
         return jsonify({"Message":f"{error}"}), 500
-    
 
-###Endpoint to populate the DB (users)
+### Endpoint para modificar la información de un usuario
+@api.route('/user',methods=['PUT'])
+@jwt_required()
+def update_user():
+
+    ## Buscamos el usuario que queremos actualizar
+    user_id = get_jwt_identity()["user_id"] ## Usuario a editar
+
+    ## Obtener la informacion del body
+    data = request.json
+
+    name = data.get("name")
+    lastname = data.get("last_name")
+    username = data.get("username",None)
+    email = data.get("email",None)
+    password = data.get("password",None)
+    description = data.get("description",None)
+    rol = data.get("rol",None)
+
+    #name = name.strip()
+
+    # Creamos una instancia del usuario
+
+    user = User.query.get(user_id)
+
+    #Verificamos que los campos no sean nulos y que no sean un string vacio
+    #Pendiente verificar por ejemplo que los campos no sea un string con uno o mas espacios! (Listo)
+  
+    if name is not None and name != "" and name.isspace() == False: 
+        user.name = name
+    if lastname is not None and lastname != "" and lastname.isspace() == False: 
+        user.last_name = lastname
+    if username is not None and username != "" and username.isspace() == False: 
+        user.username = username
+    if email is not None and email != "" and email.isspace() == False:
+        user.email = email
+    if description is not None and description !=""  and description.isspace() == False:
+        user.description = description
+    if rol is not None and rol != "" and rol.isspace() == False:
+        user.rol = rol
+
+    ## Contraseña nueva con hash y salt
+    if password is not None and password != "" and  password.isspace() == False:
+        user.password = set_password(password, user.salt)
+
+    try:
+        db.session.commit()
+        return jsonify({"message": "usuario actualizado"})
+    except Exception as error:
+        db.session.rollback()
+        return error 
+    
+    
+#### Endpoints para crear datos en nuestras tablas    
+
+
+###Endpoint para crear usuarios en la base de datos (users)
 @api.route("/user-population", methods=["GET"])
 def user_population():
     with open(user_path, "r") as file:
@@ -210,7 +275,7 @@ def user_population():
         
     return jsonify("todo funciono"), 200
 
-###Endpoint to populate the DB (subjects)
+###Endpoint para crear materias en la base de datos (subjects)
 @api.route("/subject-population", methods=["GET"])
 def subject_population():
     with open(subject_path, "r") as file:
@@ -230,9 +295,84 @@ def subject_population():
         
     return jsonify("todo funciono"), 200
 
+# Endpoint para traer los profesores a la vista de materias
 @api.route ('/subject/<int:subject_id>', methods=['GET'])
 def get_teachers(subject_id):
     subject = Favorites_subject()
     subject = subject.query.filter_by(subject_id = subject_id).all()
     return jsonify(list(map(lambda item : item.serialize(), subject))), 200
+
+#Variables y funcion para enviar emails
+
+# Protocolo y puerto
+smtp_address = os.getenv("SMTP_ADDRESS")
+smtp_port = os.getenv("SMTP_PORT")
+
+# Datos de nuestra app
+email_address = os.getenv("EMAIL_ADDRESS")
+email_password = os.getenv("EMAIL_PASSWORD")
+
+# Función para enviar un correo con un asunto, a un destinatario con un "body" predeterminado
+def email_function(subject, recipient, body):
+    # Asunto del correo (El \n es una salto de linea  de la libreria. Lo usamos para poder integrar mas parametros)
+    # Ese reply acalara en el apartado para mi de gmail
+    # message = f"Subject: {subject}\nReply-To: {recipient}\nFrom: {recipient}\nTo:{recipient}\n{message}"
+    message = MIMEMultipart("alternative")
+    message["Subject"] = subject
+    message["From"] = email_address
+    message["To"] = recipient
+    html = '''
+        <html>
+        <body>
+        <div>
+        <p>
+        Estás recibiendo este correo porque hiciste una solicitud de recuperación de contraseña para tu cuenta
+        </p>
+        ''' + body + '''   
+        <p>
+        -TuMentorEnLinea
+        </p>
+        </div>
+        </body>
+        </html>
+    '''
+    html_mime = MIMEText(html, 'html')
+    #adjuntamos el código html al mensaje
+    message.attach(html_mime)
+    try:
+        # server = smtplib.SMTP(smtp_address, smtp_port)
+        # server.starttls()
+        # server.login("tumentorenlinea1@gmail.com", "ytirjlqnjrmnylyk")
+        # # (1er parametro es el email que envia, 2do parametro email que lo recibe y 3er parametro es el mensaje)
+        # message = message.encode('utf-8')
+        # server.sendmail(email_address,recipient, message)
+        # server.quit()
+        # print ("Se envio el mensage")
+        # return True
+        print("me ejecuto en el endpoint en enviar mensaje")
+        context = ssl.create_default_context()
+        with smtplib.SMTP_SSL(smtp_address, smtp_port, context=context) as server:
+            server.login(email_address, email_password)
+            server.sendmail(email_address, recipient, message.as_string())
+            print("me ejecuto")
+        return True
+    
+    except Exception as error:
+        print(error.args)
+        print("aqui entra el error")
+        return False
+  
+# Endpoint para mandar un correo al usuario introducido en el body  
+@api.route("/sendemail", methods=["POST"])
+def send_email():
+    body = request.json
+    result = email_function(body.get('subject'), body.get("to"), body.get("message"))
+    print("Entre en el endpoint")
+    print(result)
+    if result == True:
+        return jsonify("Email sent"), 200
+    
+    else:
+        return jsonify("There was an error. The email was not sent"), 500
+
 
