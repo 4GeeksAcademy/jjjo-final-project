@@ -245,9 +245,6 @@ email_password = os.getenv("EMAIL_PASSWORD")
 
 
 def email_function(subject, recipient, body):
-    # Asunto del correo (El \n es una salto de linea  de la libreria. Lo usamos para poder integrar mas parametros)
-    # Ese reply acalara en el apartado para mi de gmail
-    # message = f"Subject: {subject}\nReply-To: {recipient}\nFrom: {recipient}\nTo:{recipient}\n{message}"
     message = MIMEMultipart("alternative")
     message["Subject"] = subject
     message["From"] = email_address
@@ -271,15 +268,6 @@ def email_function(subject, recipient, body):
     #adjuntamos el código html al mensaje
     message.attach(html_mime)
     try:
-        # server = smtplib.SMTP(smtp_address, smtp_port)
-        # server.starttls()
-        # server.login("email_address", "email_password")
-        # # (1er parametro es el email que envia, 2do parametro email que lo recibe y 3er parametro es el mensaje)
-        # message = message.encode('utf-8')
-        # server.sendmail(email_address,recipient, message)
-        # server.quit()
-        # print ("Se envio el mensage")
-        # return True
         print("me ejecuto en el endpoint en enviar mensaje")
         context = ssl.create_default_context()
         with smtplib.SMTP_SSL(smtp_address, smtp_port, context=context) as server:

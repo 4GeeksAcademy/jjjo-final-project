@@ -44,7 +44,7 @@ export const Private = () => {
                     <p className="card-text">Una invitacion a seguir al usuario sea como estudiante o como profesor</p>
                     <a href="#" className="btn btn-primary">Contactame (aqui iria el link para mandar un correo electronico)</a>
                 </div>
-            </div>
+            </div>h
 
 
 
