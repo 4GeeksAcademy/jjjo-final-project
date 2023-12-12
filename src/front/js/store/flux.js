@@ -88,9 +88,37 @@ const getState = ({ getStore, getActions, setStore }) => {
 							"Content-Type": "application/json"
 						},
 						body: JSON.stringify(item)
-
 					})
+
+					if (response.ok) {
+						alert('Favorito agregado con éxito')
+						getActions().getFavorite()
+					}
+					else {
+						alert('Favorito ya existe')
+					}
 					return response.status
+
+				} catch (error) {
+					console.log(error)
+				}
+
+			},
+
+			deleteFavorite: async (item) => {
+				let store = getStore()
+				try {
+					let response = await fetch(`${process.env.BACKEND_URL}/favorites/${item.instructor_id.id}`, {
+						method: 'DELETE',
+						headers: {
+							"Authorization": `Bearer ${store.token}`
+						}
+					}
+					)
+					if (response.ok) {
+						alert('Favorito borrado con éxito')
+						getActions().getFavorite()
+					}
 				} catch (error) {
 					console.log(error)
 				}
@@ -109,9 +137,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 					)
 					let data = await response.json()
-					setStore({
-						favorites: data
-					})
+					if (response.ok) {
+						setStore({
+							favorites: data
+						})
+					}
 
 				} catch (error) {
 					console.log(error)

@@ -46,7 +46,7 @@ class Favorites(db.Model):
         return{
             "id": self.id,
             "student_id": self.student_id,
-            "instructor_id": self.instructor_id
+            "instructor_id": self.instructor.serialize()
             
         }   
 

@@ -11,6 +11,18 @@ export const Subject = () => {
         actions.getTeachers(id)
     }
 
+    // const handleFavorite = async (event, item) => {
+    //     event.preventDefault()
+    //     let response = await actions.addFavorite(item)
+
+    //     if (response.status == 400) {
+    //         alert("Este favorito ya existe")
+    //     } else {
+    //         actions.getFavorites()
+    //         alert("Favorito agregado con exito")
+    //     }
+    // }
+
     useEffect(() => { getTeachersList(id) }, [nature])
     return (
 

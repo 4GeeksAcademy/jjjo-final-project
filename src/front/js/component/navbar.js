@@ -93,8 +93,8 @@ export const Navbar = () => {
 								{
 									store.favorites.map((item) => {
 										return (
-											<li key={item.id} className="d-flex justify-content-between align-items-center">
-												<p className="dropdown-item my-1">{item.instructor_id}</p><i onClick={() => actions.deleteFavorite(item)} className="fa-solid fa-trash mx-2"></i>
+											<li key={item.instructor_id?.name} className="d-flex justify-content-between align-items-center">
+												<p className="dropdown-item my-1">{`${item.instructor_id?.name} ${item.instructor_id?.last_name}`}</p><i onClick={() => actions.deleteFavorite(item)} className="fa-solid fa-trash mx-2"></i>
 											</li>
 										)
 									})

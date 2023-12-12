@@ -162,11 +162,11 @@ def add_favorites_users(instructor_id):
 
 
 # End point para borrar favoritos creados
-api.route ('favorites/user/<int:instructor_id>', methods=['DELETE'])
+@api.route ('favorites/<int:instructor_id>', methods=['DELETE'])
 @jwt_required()
-def delete_favorite(instructor_id, student_id):
+def delete_favorite(instructor_id):
     student_id = get_jwt_identity()["user_id"]
-    favorite = Favorites.query.filter_by(student_id=student_id, user_id=instructor_id).first()
+    favorite = Favorites.query.filter_by(student_id=student_id, instructor_id=instructor_id).first()
 
     if favorite is None:
         return jsonify({"Message":"This favorite does not exist"}), 404
@@ -174,7 +174,7 @@ def delete_favorite(instructor_id, student_id):
     try:
         db.session.delete(favorite)
         db.session.commit()
-        return jsonify({"Message":"This favorite was deleted"})
+        return jsonify({"Message":"This favorite was deleted"}), 200
     
     except Exception as error:
         db.session.rollback()
