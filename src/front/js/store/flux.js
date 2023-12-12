@@ -111,9 +111,26 @@ const getState = ({ getStore, getActions, setStore }) => {
 						}
 					)
 				}
+			},
 
-
-			}
+			// Define a function inside the actions to consult the API and add a modify an existing user
+			updateUser: async (data) => {
+				let store = getStore()
+				try {
+					let response = await fetch(`${process.env.BACKEND_URL}/user`, {
+						method: 'PUT',
+						headers: {
+							"Content-Type": "application/json", 
+							"Authorization": `Bearer ${store.token}`
+						},
+						body: JSON.stringify(data)
+					})
+					return response.status
+				} catch (error) {
+					console.log(error)
+				}
+			}			
+			
 		}
 	};
 };
