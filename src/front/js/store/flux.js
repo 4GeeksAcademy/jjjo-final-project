@@ -117,7 +117,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					)
 					if (response.ok) {
 						alert('Favorito borrado con éxito')
-						getActions().getFavorite()
+						getActions().getFavorite() // Esta linea es para actualizar la informacion del favorito
 					}
 				} catch (error) {
 					console.log(error)
@@ -169,7 +169,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-
 			// Define a function inside the actions to consult the API and add a modify an existing user
 			updateUser: async (data) => {
 				let store = getStore()
@@ -177,16 +176,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 					let response = await fetch(`${process.env.BACKEND_URL}/user`, {
 						method: 'PUT',
 						headers: {
-							"Content-Type": "application/json", 
+							"Content-Type": "application/json",
 							"Authorization": `Bearer ${store.token}`
 						},
 						body: JSON.stringify(data)
 					})
+					getActions().getLogedUser()
 					return response.status
 				} catch (error) {
 					console.log(error)
 				}
-			},			
+			},
 
 			getTeachers: async (id) => {
 				let store = getStore()
