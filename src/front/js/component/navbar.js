@@ -1,9 +1,10 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext"
 
 export const Navbar = () => {
 	const { store, actions } = useContext(Context)
+
 
 
 	return (
@@ -27,11 +28,21 @@ export const Navbar = () => {
 									Materias
 								</a>
 								<ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-									<li className="d-flex justify-content-between align-items-center"><Link className="dropdown-item" to="/math/5">Matemáticas </Link><i className="fa-sharp fa-solid fa-square-root-variable mx-2"></i></li>
-									<li className="d-flex justify-content-between align-items-center"><Link className="dropdown-item" to="/chemistry/1">Química </Link><i className="fa-solid fa-flask-vial mx-2"></i></li>
-									<li className="d-flex justify-content-between align-items-center"><Link className="dropdown-item" to="/physics/2">Física </Link><i className="fa-solid fa-atom mx-2" ></i></li>
-									<li className="d-flex justify-content-between align-items-center"><Link className="dropdown-item" to="/biology/3">Biologia </Link><i className="fa-solid fa-dna mx-2"></i></li>
-									<li className="d-flex justify-content-between align-items-center"><Link className="dropdown-item" to="/coding/4">Programación </Link><i className="fa-solid fa-code mx-2"></i></li>
+									{store.subjects.map((item) => {
+
+										return (
+
+											<li key={item.id} className="d-flex justify-content-between align-items-center"><Link className="dropdown-item" to={`/${item.name.toLowerCase()}/${item.id}`}>{item.name} </Link></li>
+
+										)
+
+
+									})}
+									{/* <li className="d-flex justify-content-between align-items-center"><Link className="dropdown-item" to="/math/21">Matemáticas </Link><i className="fa-sharp fa-solid fa-square-root-variable mx-2"></i></li>
+									<li className="d-flex justify-content-between align-items-center"><Link className="dropdown-item" to="/chemistry/23">Química </Link><i className="fa-solid fa-flask-vial mx-2"></i></li>
+									<li className="d-flex justify-content-between align-items-center"><Link className="dropdown-item" to="/physics/22">Física </Link><i className="fa-solid fa-atom mx-2" ></i></li>
+									<li className="d-flex justify-content-between align-items-center"><Link className="dropdown-item" to="/biology/24">Biologia </Link><i className="fa-solid fa-dna mx-2"></i></li>
+									<li className="d-flex justify-content-between align-items-center"><Link className="dropdown-item" to="/coding/25">Programación </Link><i className="fa-solid fa-code mx-2"></i></li> */}
 									{/* <li><hr className="dropdown-divider" /></li>
 									<li><a className="dropdown-item" href="#">¿Buscas un tema diferente?</a></li> */}
 								</ul>
@@ -68,12 +79,11 @@ export const Navbar = () => {
 									Materias
 								</a>
 								<ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-									<li className="d-flex justify-content-between align-items-center"><Link className="dropdown-item" to="/math/5">Matemáticas </Link><i className="fa-sharp fa-solid fa-square-root-variable mx-2"></i></li>
-									<li className="d-flex justify-content-between align-items-center"><Link className="dropdown-item" to="/chemistry/1">Química </Link><i className="fa-solid fa-flask-vial mx-2"></i></li>
-									<li className="d-flex justify-content-between align-items-center"><Link className="dropdown-item" to="/physics/2">Física </Link><i className="fa-solid fa-atom mx-2" ></i></li>
-									<li className="d-flex justify-content-between align-items-center"><Link className="dropdown-item" to="/biology/3">Biologia </Link><i className="fa-solid fa-dna mx-2"></i></li>
-									<li className="d-flex justify-content-between align-items-center"><Link className="dropdown-item" to="/coding/4">Programación </Link><i className="fa-solid fa-code mx-2"></i></li>
-									{/* <li><hr className="dropdown-divider" /></li> */}
+									<li className="d-flex justify-content-between align-items-center"><Link className="dropdown-item" to="/math/21">Matemáticas </Link><i className="fa-sharp fa-solid fa-square-root-variable mx-2"></i></li>
+									<li className="d-flex justify-content-between align-items-center"><Link className="dropdown-item" to="/chemistry/23">Química </Link><i className="fa-solid fa-flask-vial mx-2"></i></li>
+									<li className="d-flex justify-content-between align-items-center"><Link className="dropdown-item" to="/physics/22">Física </Link><i className="fa-solid fa-atom mx-2" ></i></li>
+									<li className="d-flex justify-content-between align-items-center"><Link className="dropdown-item" to="/biology/24">Biologia </Link><i className="fa-solid fa-dna mx-2"></i></li>
+									<li className="d-flex justify-content-between align-items-center"><Link className="dropdown-item" to="/coding/25">Programación </Link><i className="fa-solid fa-code mx-2"></i></li>
 									{/* <li><a className="dropdown-item" href="#">¿Buscas un tema diferente?</a></li> */}
 								</ul>
 							</li>

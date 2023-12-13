@@ -285,6 +285,7 @@ def subject_population():
             subject = Subject(
                 name=subject["name"],
                 description=subject["description"],
+                image_banner = subject["image_banner"]
             )
             db.session.add(subject)
             try:
@@ -381,7 +382,7 @@ def send_email():
 @jwt_required()
 def add_favorites_subjects(subject_id):
     user_id = get_jwt_identity()["user_id"]
-    subjects = Favorites_subject.query.filter_by(subject_id = subject_id, user_id = user_id).first()
+    subjects = Favorites_subject.query.filter_by(user_id = user_id, subject_id = subject_id).first()
 
     user = User.query.get(user_id)
     if user is None:
@@ -403,7 +404,7 @@ def add_favorites_subjects(subject_id):
     
 
 # Un metodo get para traer las materias que los usuarios desean enseñar
-@api.route ('subjects/subjects', methods=['GET'])
+@api.route ('/subjects', methods=['GET'])
 @jwt_required()
 def get_user_subjects():
     user_id = get_jwt_identity()["user_id"]
@@ -411,7 +412,7 @@ def get_user_subjects():
     if user_id is None:
         return jsonify({"Message":"This user does not exist"}), 404
     
-    subjects = Favorites_subject.query.filter_by(user_id=user_id).all()
+    subjects = Favorites_subject.query.filter_by(user_id = user_id).all()
 
     if subjects is None:
         return jsonify({"Message":"This user teaches no subjects"}), 404
@@ -423,7 +424,7 @@ def get_user_subjects():
     return jsonify(subject_list), 200
 
     # End point para borrar materias que no se desean enseñar
-@api.route ('subjects/<int:subject_id>', methods=['DELETE'])
+@api.route ('/subjects/<int:subject_id>', methods=['DELETE'])
 @jwt_required()
 def delete_subject(subject_id):
     user_id = get_jwt_identity()["user_id"]
@@ -443,7 +444,7 @@ def delete_subject(subject_id):
 
 #End point para traer las materias a la vista privada de profesores
 
-@api.route ('subjects/all', methods=['GET'])
+@api.route ('/subjects/all', methods=['GET'])
 def get_subjects():
     subject = Subject()
     subject = subject.query.all()

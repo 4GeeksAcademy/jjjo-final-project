@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
-//import "/workspaces/jjjo-final-project/src/front/styles/index.css"
+import SubjectDetail from "./SubjectDetail.jsx";
+
 
 export const Subject = () => {
     const { store, actions } = useContext(Context)
@@ -28,217 +29,234 @@ export const Subject = () => {
 
         <>
             {
+                store.subjects.map((item) => {
+                    return (
+                        <>
+                            {store.Subjects.map((item) => {
+
+                                item.name == nature ? 
+                            return (
+                                    <SubjectDetail />
+                                )
+                            })}
+
+
+                        </>
+                //     )
+
+                // })
+
                 // <div className="container">
                 //     <div className="row col-12 md-6">
 
-                id == 1 ?
-                    <div>
-                        <div className="card mb-3">
-                            <img src="https://www.cees-silicates.org/images/headers/Banner-630.jpg" className=" subject-img img-thumbnail card-img-top" alt="..." />
-                            <div className="card-body">
+                // id == 1 ?
+                //     <div>
+                //         <div className="card mb-3">
+                //             <img src="https://www.cees-silicates.org/images/headers/Banner-630.jpg" className=" subject-img img-thumbnail card-img-top" alt="..." />
+                //             <div className="card-body">
 
-                                <h5 className="card-title">Química</h5>
-                                <p className="card-text">Aqui encontrarás los mejores mentores sobre Química</p>
-                            </div>
+                //                 <h5 className="card-title">Química</h5>
+                //                 <p className="card-text">Aqui encontrarás los mejores mentores sobre Química</p>
+                //             </div>
 
-                        </div>
-
-
-                        <div className="container">
-                            <h2>Profesores Disponibles</h2>
-                            <div className="my-carrousel">
-
-                                {store.teachers.map((item) => {
-                                    return (
+                //         </div>
 
 
-                                        <div key={item.id = 1} className="card mb-3 border border-secondary " >
-                                            <h3 className="card-title d-flex justify-content-center">{item.user?.name} {item.user?.last_name}</h3>
-                                            <div className="card-body d-flex justify-content-between">
-                                                <img className="my-img mx-2" src="https://picsum.photos/300/300" />
+                //         <div className="container">
+                //             <h2>Profesores Disponibles</h2>
+                //             <div className="my-carrousel">
 
-                                                <p className="card-text"> Descripción : {item.user?.description}</p>
-
-                                                <div className="d-flex justify-content-between">
-                                                    <button onClick={() => actions.addFavorite(item)} className="btn bg-warning"><i className="fa-solid fa-star"></i></button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    )
-                                })}
-                            </div>
-
-                        </div>
-                    </div>
-                    :
-                    id == 2 ?
-                        <div>
-                            <div className="card mb-3">
-                                <img src="https://www.umsl.edu/degrees/bachelors/images/physics-banner.jpg" className=" subject-img img-thumbnail card-img-top" alt="..." />
-                                <div className="card-body">
-
-                                    <h5 className="card-title">Física</h5>
-                                    <p className="card-text">Aqui encontrarás los mejores mentores sobre Física</p>
-                                </div>
-
-                            </div>
+                //                 {store.teachers.map((item) => {
+                //                     return (
 
 
-                            <div className="container">
-                                <h2>Profesores Disponibles</h2>
-                                <div className="my-carrousel">
+                //                         <div key={item.id = 1} className="card mb-3 border border-secondary " >
+                //                             <h3 className="card-title d-flex justify-content-center">{item.user?.name} {item.user?.last_name}</h3>
+                //                             <div className="card-body d-flex justify-content-between">
+                //                                 <img className="my-img mx-2" src="https://picsum.photos/300/300" />
 
-                                    {store.teachers.map((item) => {
-                                        return (
+                //                                 <p className="card-text"> Descripción : {item.user?.description}</p>
 
+                //                                 <div className="d-flex justify-content-between">
+                //                                     <button onClick={() => actions.addFavorite(item)} className="btn bg-warning"><i className="fa-solid fa-star"></i></button>
+                //                                 </div>
+                //                             </div>
+                //                         </div>
+                //                     )
+                //                 })}
+                //             </div>
 
-                                            <div key={item.id} className="card mb-3 border border-secondary " >
-                                                <h3 className="card-title d-flex justify-content-center">{item.user?.name} {item.user?.last_name}</h3>
-                                                <div className="card-body d-flex justify-content-between">
-                                                    <img className="my-img mx-2" src="https://picsum.photos/300/300" />
+                //         </div>
+                //     </div>
+                //     :
+                //     id == 2 ?
+                //         <div>
+                //             <div className="card mb-3">
+                //                 <img src="https://www.umsl.edu/degrees/bachelors/images/physics-banner.jpg" className=" subject-img img-thumbnail card-img-top" alt="..." />
+                //                 <div className="card-body">
 
-                                                    <p className="card-text"> Descripción : {item.user?.description}</p>
+                //                     <h5 className="card-title">Física</h5>
+                //                     <p className="card-text">Aqui encontrarás los mejores mentores sobre Física</p>
+                //                 </div>
 
-                                                    <div className="d-flex justify-content-between">
-                                                        <button onClick={() => actions.addFavorite(item)} className="btn bg-warning"><i className="fa-solid fa-star"></i></button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        )
-                                    })}
-                                </div>
-
-                            </div>
-
-                        </div>
-                        :
-
-                        id == 3 ?
-                            <div>
-                                <div className="card mb-3">
-                                    <img src="https://www.biologycorner.com/wp-content/uploads/google-classroom-banner-green.png" className=" subject-img img-thumbnail card-img-top" alt="..." />
-                                    <div className="card-body">
-
-                                        <h5 className="card-title">Biología</h5>
-                                        <p className="card-text">Aqui encontrarás los mejores mentores sobre Biología</p>
-                                    </div>
-
-                                </div>
-
-                                <div className="container">
-                                    <h2>Profesores Disponibles</h2>
-                                    <div className="my-carrousel">
-
-                                        {store.teachers.map((item) => {
-                                            return (
+                //             </div>
 
 
-                                                <div key={item.id} className="card mb-3 border border-secondary " >
-                                                    <h3 className="card-title d-flex justify-content-center">{item.user?.name} {item.user?.last_name}</h3>
-                                                    <div className="card-body d-flex justify-content-between">
-                                                        <img className="my-img mx-2" src="https://picsum.photos/300/300" />
+                //             <div className="container">
+                //                 <h2>Profesores Disponibles</h2>
+                //                 <div className="my-carrousel">
 
-                                                        <p className="card-text"> Descripción : {item.user?.description}</p>
-
-                                                        <div className="d-flex justify-content-between">
-                                                            <button onClick={() => actions.addFavorite(item)} className="btn bg-warning"><i className="fa-solid fa-star"></i></button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            )
-                                        })}
-                                    </div>
-
-                                </div>
-                            </div>
-                            :
-                            id == 4 ?
-                                <div>
-                                    <div className="card mb-3">
-                                        <img src="https://sonomacounty.ca.gov/Ektron%20Images/uploadedImages/Sonoma/ISD/_Images/_carousel/ISD_System_Banner_750.jpg" className=" subject-img img-thumbnail card-img-top" alt="..." />
-                                        <div className="card-body">
-
-                                            <h5 className="card-title">Programación</h5>
-                                            <p className="card-text">Aqui encontrarás los mejores mentores sobre Programación</p>
-                                        </div>
-
-                                    </div>
-
-                                    <div className="container">
-                                        <h2>Profesores Disponibles</h2>
-                                        <div className="my-carrousel">
-
-                                            {store.teachers.map((item) => {
-                                                return (
+                //                     {store.teachers.map((item) => {
+                //                         return (
 
 
-                                                    <div key={item.id} className="card mb-3 border border-secondary " >
-                                                        <h3 className="card-title d-flex justify-content-center">{item.user?.name} {item.user?.last_name}</h3>
-                                                        <div className="card-body d-flex justify-content-between">
-                                                            <img className="my-img mx-2" src="https://picsum.photos/300/300" />
+                //                             <div key={item.id} className="card mb-3 border border-secondary " >
+                //                                 <h3 className="card-title d-flex justify-content-center">{item.user?.name} {item.user?.last_name}</h3>
+                //                                 <div className="card-body d-flex justify-content-between">
+                //                                     <img className="my-img mx-2" src="https://picsum.photos/300/300" />
 
-                                                            <p className="card-text"> Descripción : {item.user?.description}</p>
+                //                                     <p className="card-text"> Descripción : {item.user?.description}</p>
 
-                                                            <div className="d-flex justify-content-between">
-                                                                <button onClick={() => actions.addFavorite(item)} className="btn bg-warning"><i className="fa-solid fa-star"></i></button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                )
-                                            })}
-                                        </div>
+                //                                     <div className="d-flex justify-content-between">
+                //                                         <button onClick={() => actions.addFavorite(item)} className="btn bg-warning"><i className="fa-solid fa-star"></i></button>
+                //                                     </div>
+                //                                 </div>
+                //                             </div>
+                //                         )
+                //                     })}
+                //                 </div>
 
-                                    </div>
-                                </div>
+                //             </div>
 
+                //         </div>
+                //         :
 
-                                :
-                                <div>
-                                    <div className="card mb-3">
-                                        <img src="https://as2.ftcdn.net/v2/jpg/05/08/10/35/1000_F_508103535_BvW4uJs6MKlAVrRPSwGJ1Y36t5pw0EvD.jpg" className=" subject-img img-thumbnail card-img-top" alt="..." />
-                                        <div className="card-body">
+                //         id == 3 ?
+                //             <div>
+                //                 <div className="card mb-3">
+                //                     <img src="https://www.biologycorner.com/wp-content/uploads/google-classroom-banner-green.png" className=" subject-img img-thumbnail card-img-top" alt="..." />
+                //                     <div className="card-body">
 
-                                            <h5 className="card-title">Matemáticas</h5>
-                                            <p className="card-text">Aqui encontrarás los mejores mentores sobre Matemáticas</p>
-                                        </div>
+                //                         <h5 className="card-title">Biología</h5>
+                //                         <p className="card-text">Aqui encontrarás los mejores mentores sobre Biología</p>
+                //                     </div>
 
-                                    </div>
+                //                 </div>
 
+                //                 <div className="container">
+                //                     <h2>Profesores Disponibles</h2>
+                //                     <div className="my-carrousel">
 
-                                    <div>
-                                        <div className="container">
-                                            <h2>Profesores Disponibles</h2>
-                                            <div className="my-carrousel">
-
-                                                {store.teachers.map((item) => {
-                                                    return (
-
-
-                                                        <div key={item.id} className="card mb-3 border border-secondary " >
-                                                            <h3 className="card-title d-flex justify-content-center">{item.user?.name} {item.user?.last_name}</h3>
-                                                            <div className="card-body d-flex justify-content-between">
-                                                                <img className="my-img mx-2" src="https://picsum.photos/300/300" />
-
-                                                                <p className="card-text"> Descripción : {item.user?.description}</p>
-
-                                                                <div className="d-flex justify-content-between">
-                                                                    <button onClick={() => actions.addFavorite(item)} className="btn bg-warning"><i className="fa-solid fa-star"></i></button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    )
-                                                })}
-                                            </div>
-
-                                        </div>
+                //                         {store.teachers.map((item) => {
+                //                             return (
 
 
-                                        <Link className="d-flex justify-content-center" to="/">
-                                            <button className="mt-2 btn btn-primary">Volver al Inicio</button>
-                                        </Link>
-                                    </div>
+                //                                 <div key={item.id} className="card mb-3 border border-secondary " >
+                //                                     <h3 className="card-title d-flex justify-content-center">{item.user?.name} {item.user?.last_name}</h3>
+                //                                     <div className="card-body d-flex justify-content-between">
+                //                                         <img className="my-img mx-2" src="https://picsum.photos/300/300" />
 
-                                </div>
+                //                                         <p className="card-text"> Descripción : {item.user?.description}</p>
+
+                //                                         <div className="d-flex justify-content-between">
+                //                                             <button onClick={() => actions.addFavorite(item)} className="btn bg-warning"><i className="fa-solid fa-star"></i></button>
+                //                                         </div>
+                //                                     </div>
+                //                                 </div>
+                //                             )
+                //                         })}
+                //                     </div>
+
+                //                 </div>
+                //             </div>
+                //             :
+                //             id == 4 ?
+                //                 <div>
+                //                     <div className="card mb-3">
+                //                         <img src="https://sonomacounty.ca.gov/Ektron%20Images/uploadedImages/Sonoma/ISD/_Images/_carousel/ISD_System_Banner_750.jpg" className=" subject-img img-thumbnail card-img-top" alt="..." />
+                //                         <div className="card-body">
+
+                //                             <h5 className="card-title">Programación</h5>
+                //                             <p className="card-text">Aqui encontrarás los mejores mentores sobre Programación</p>
+                //                         </div>
+
+                //                     </div>
+
+                //                     <div className="container">
+                //                         <h2>Profesores Disponibles</h2>
+                //                         <div className="my-carrousel">
+
+                //                             {store.teachers.map((item) => {
+                //                                 return (
+
+
+                //                                     <div key={item.id} className="card mb-3 border border-secondary " >
+                //                                         <h3 className="card-title d-flex justify-content-center">{item.user?.name} {item.user?.last_name}</h3>
+                //                                         <div className="card-body d-flex justify-content-between">
+                //                                             <img className="my-img mx-2" src="https://picsum.photos/300/300" />
+
+                //                                             <p className="card-text"> Descripción : {item.user?.description}</p>
+
+                //                                             <div className="d-flex justify-content-between">
+                //                                                 <button onClick={() => actions.addFavorite(item)} className="btn bg-warning"><i className="fa-solid fa-star"></i></button>
+                //                                             </div>
+                //                                         </div>
+                //                                     </div>
+                //                                 )
+                //                             })}
+                //                         </div>
+
+                //                     </div>
+                //                 </div>
+
+
+                //                 :
+                //                 <div>
+                //                     <div className="card mb-3">
+                //                         <img src="https://as2.ftcdn.net/v2/jpg/05/08/10/35/1000_F_508103535_BvW4uJs6MKlAVrRPSwGJ1Y36t5pw0EvD.jpg" className=" subject-img img-thumbnail card-img-top" alt="..." />
+                //                         <div className="card-body">
+
+                //                             <h5 className="card-title">Matemáticas</h5>
+                //                             <p className="card-text">Aqui encontrarás los mejores mentores sobre Matemáticas</p>
+                //                         </div>
+
+                //                     </div>
+
+
+                //                     <div>
+                //                         <div className="container">
+                //                             <h2>Profesores Disponibles</h2>
+                //                             <div className="my-carrousel">
+
+                //                                 {store.teachers.map((item) => {
+                //                                     return (
+
+
+                //                                         <div key={item.id} className="card mb-3 border border-secondary " >
+                //                                             <h3 className="card-title d-flex justify-content-center">{item.user?.name} {item.user?.last_name}</h3>
+                //                                             <div className="card-body d-flex justify-content-between">
+                //                                                 <img className="my-img mx-2" src="https://picsum.photos/300/300" />
+
+                //                                                 <p className="card-text"> Descripción : {item.user?.description}</p>
+
+                //                                                 <div className="d-flex justify-content-between">
+                //                                                     <button onClick={() => actions.addFavorite(item)} className="btn bg-warning"><i className="fa-solid fa-star"></i></button>
+                //                                                 </div>
+                //                                             </div>
+                //                                         </div>
+                //                                     )
+                //                                 })}
+                //                             </div>
+
+                //                         </div>
+
+
+                //                         <Link className="d-flex justify-content-center" to="/">
+                //                             <button className="mt-2 btn btn-primary">Volver al Inicio</button>
+                //                         </Link>
+                //                     </div>
+
+                //                 </div>
 
                 // nature == "chemistry" ?
                 //     <div className="container">

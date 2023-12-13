@@ -175,6 +175,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			getTeachers: async (id) => {
 				let store = getStore()
+				console.log(id)
 				try {
 
 					let response = await fetch(`${process.env.BACKEND_URL}/subject/${id}`)
@@ -196,12 +197,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 				let store = getStore()
 				try {
 
-					let response = await fetch(`${process.env.BACKEND_URL}/subject/${id}`)
+					let response = await fetch(`${process.env.BACKEND_URL}/subject/subjects`)
 					let data = await response.json()
 					console.log(response)
 
 					setStore({
-						teache_subject: data
+						teach_subject: data
 					})
 
 
@@ -214,7 +215,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			addSubject: async (id) => {
 				let store = getStore()
 				try {
-					let response = await fetch(`${process.env.BACKEND_URL}/subjects/${store.subjects.id}`, {
+					let response = await fetch(`${process.env.BACKEND_URL}/subjects/${id}`, {
 						method: 'POST',
 						headers: {
 							"Authorization": `Bearer ${store.token}`,

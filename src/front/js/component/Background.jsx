@@ -39,35 +39,37 @@ const Background = () => {
                                 </div>
                             </div>
                         </div>
+
+
                         <div className="row d-flex justify-content-center">
                             <div className="col-6 md-4 d-flex justify-content-between m-3 border border-secondary m-3 p-3" >
-                                <h4 className="card-title d-flex justify-content-between">Matemáticas <i className="fa-sharp fa-solid fa-square-root-variable mx-2"></i></h4>
+                                <h4 className="card-title d-flex justify-content-between">{store.subjects[0]?.name} <i className="fa-sharp fa-solid fa-square-root-variable mx-2"></i></h4>
                                 <div className="d-flex justify-content-between">
-                                    <button onClick={() => actions.addSubject(store.subjects.id)} className="btn bg-warning"> Enseñar <i className="fa-solid fa-chalkboard-user"></i></button>
+                                    <button onClick={() => actions.addSubject(store.subjects[0].id)} className="btn bg-warning"> Enseñar <i className="fa-solid fa-chalkboard-user"></i></button>
                                 </div>
                             </div>
                             <div className="col-6 md-4 d-flex justify-content-between m-3 border border-secondary m-3 p-3" >
                                 <h4 className="card-title d-flex justify-content-between">Física <i className="fa-solid fa-atom mx-2" ></i></h4>
                                 <div className="d-flex justify-content-between">
-                                    <button onClick={() => actions.addSubject(item)} className="btn bg-warning"> Enseñar <i className="fa-solid fa-chalkboard-user"></i></button>
+                                    <button onClick={() => actions.addSubject(store.subjects[0].id)} className="btn bg-warning"> Enseñar <i className="fa-solid fa-chalkboard-user"></i></button>
                                 </div>
                             </div>
                             <div className="col-6 md-4 d-flex justify-content-between m-3 border border-secondary m-3 p-3" >
                                 <h4 className="card-title d-flex justify-content-between">Química <i className="fa-solid fa-flask-vial mx-2"></i></h4>
                                 <div className="d-flex justify-content-between">
-                                    <button onClick={() => actions.addSubject(item)} className="btn bg-warning"> Enseñar <i className="fa-solid fa-chalkboard-user"></i></button>
+                                    <button onClick={() => actions.addSubject(store.subjects[0].id)} className="btn bg-warning"> Enseñar <i className="fa-solid fa-chalkboard-user"></i></button>
                                 </div>
                             </div>
                             <div className="col-6 md-4 d-flex justify-content-between m-3 border border-secondary m-3 p-3" >
                                 <h4 className="card-title d-flex justify-content-between"> Biología<i className="fa-solid fa-dna mx-2"></i></h4>
                                 <div className="d-flex justify-content-between">
-                                    <button onClick={() => actions.addSubject(item)} className="btn bg-warning"> Enseñar <i className="fa-solid fa-chalkboard-user"></i></button>
+                                    <button onClick={() => actions.addSubject(store.subjects[0].id)} className="btn bg-warning"> Enseñar <i className="fa-solid fa-chalkboard-user"></i></button>
                                 </div>
                             </div>
                             <div className="col-6 md-4 d-flex justify-content-between m-3 border border-secondary m-3 p-3" >
                                 <h4 className="card-title d-flex justify-content-between"> Programación <i className="fa-solid fa-code mx-2"></i></h4>
                                 <div className="d-flex justify-content-between">
-                                    <button onClick={() => actions.addSubject(item)} className="btn bg-warning"> Enseñar <i className="fa-solid fa-chalkboard-user"></i></button>
+                                    <button onClick={() => actions.addSubject(store.subjects[0].id)} className="btn bg-warning"> Enseñar <i className="fa-solid fa-chalkboard-user"></i></button>
                                 </div>
                             </div>
                         </div>
@@ -118,7 +120,7 @@ const Background = () => {
 
                         </div> */}
                     </div>
-                </div>
+                </div >
             </div >
         </>
     )
