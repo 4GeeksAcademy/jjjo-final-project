@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
+import "../../styles/index.css";
 
 const SubjectDetail = ({ item }) => {
     const { store, actions } = useContext(Context)
@@ -7,9 +8,10 @@ const SubjectDetail = ({ item }) => {
 
     return (
 
+        
         <div>
             <div className="card mb-3">
-                <img src={item?.image_banner} className=" subject-img img-thumbnail card-img-top" alt="..." />
+                <img src={item?.image_banner} className="subject-img img-thumbnail card-img-top" alt="..." />
                 <div className="card-body">
 
                     <h5 className="card-title">{item?.name}</h5>

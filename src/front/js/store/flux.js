@@ -193,16 +193,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			getTeacherSubjects: async (id) => {
+			getTeacherSubjects: async () => {
 				let store = getStore()
 				try {
 
-					let response = await fetch(`${process.env.BACKEND_URL}/subject/subjects`)
+					let response = await fetch(`${process.env.BACKEND_URL}/subjects`)
 					let data = await response.json()
 					console.log(response)
 
 					setStore({
-						teach_subject: data
+						teach_subjects: data
 					})
 
 
@@ -212,9 +212,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
+			// Funcion para agregar materias que el usuario desea enseñar
+
 			addSubject: async (id) => {
 				let store = getStore()
 				try {
+					console.log(id)
 					let response = await fetch(`${process.env.BACKEND_URL}/subjects/${id}`, {
 						method: 'POST',
 						headers: {

@@ -384,10 +384,6 @@ def add_favorites_subjects(subject_id):
     user_id = get_jwt_identity()["user_id"]
     subjects = Favorites_subject.query.filter_by(user_id = user_id, subject_id = subject_id).first()
 
-    user = User.query.get(user_id)
-    if user is None:
-        return jsonify({"Message":"This user does not exist"}), 404
-    
     if subjects is not None:
         return jsonify({"Message":"You already teach this subject"}), 400
 
