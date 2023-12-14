@@ -237,10 +237,11 @@ def update_user():
 
     try:
         db.session.commit()
-        return jsonify({"message": "usuario actualizado"})
+        return jsonify({"message": "usuario actualizado"}), 200
     except Exception as error:
         db.session.rollback()
-        return error 
+        print(error)
+        return jsonify({"message": "Si este error persiste comuniquese con el administrador"}), 500
     
     
 #### Endpoints para crear datos en nuestras tablas    
