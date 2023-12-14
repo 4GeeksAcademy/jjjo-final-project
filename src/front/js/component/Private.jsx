@@ -39,10 +39,10 @@ export const Private = () => {
                     </div>
                 </div>
                 <div className="card-body">
-
-
                     <p className="card-text">Una invitacion a seguir al usuario sea como estudiante o como profesor</p>
-                    <a href="#" className="btn btn-primary">Modifica tu información</a>
+                    <Link to="/user/update">
+                        <a href="#" className="btn btn-primary">Modifica tu información</a>
+                    </Link>
                 </div>
             </div>
 
