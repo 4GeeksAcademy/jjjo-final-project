@@ -3,9 +3,41 @@ import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 //import "/workspaces/jjjo-final-project/src/front/styles/index.css"
 
+
+const initialState = {
+    avatar: ""
+}
 export const Private = () => {
+
     const { store, actions } = useContext(Context)
 
+    const [user, setUser] = useState(initialState)
+
+    const handleChange = (event) => {
+        setUser({
+            ...user,
+            [event.target.name]: event.target.value
+        })
+    }
+
+    const handleImage = (event) => {
+        console.log(typeof event.target.files[0].type)
+        if (event.target.files[0].type === "image/png" || "image/jpg") {
+            setUser({ ...user, avatar: event.target.files[0] })
+        } else {
+            console.log("esto no es una imagen")
+        }
+
+    }
+
+    const handleSubmit = async (event)=> {
+        event.preventDefault()
+        const formData = new FormData()
+        formData.append("avatar", user.avatar)
+
+        const response = await actions.saveUser(formData)
+        console.log(response)
+    }
 
 
     return (
@@ -25,7 +57,22 @@ export const Private = () => {
                 </div>
                 <div className="container">
                     <div className="container m-3 d-flex justify-content-center">
-                        <img src="https://picsum.photos/50/50" className=" my-profile-img d-flex justify-content-center" alt="..." />
+                        <div className="d-flex flex-column">
+                            <div className="">
+                                <form onSubmit={handleSubmit}>
+                                        <input
+                                            type="file"
+                                            placeholder="Sube tu imagen de perfil"
+                                            className="form-control"
+                                            name="avatar"
+                                            onChange={handleImage}
+                                        />
+                                  <button className="border border-primary rounded mt-2">Guarda Cambios</button>
+                                </form>
+                            </div>
+                            {/* <img src="https://picsum.photos/50/50" className=" my-profile-img d-flex justify-content-center" alt="..." />  */}
+                            {/* <button className="border border-primary rounded mt-2">Guarda Cambios</button> */}
+                        </div>
                         <div className="card-body border">
                             {/* <p className="card-text">{store.user.location}</p> */}
                             <h1 className="card-title">{store.user.name}  {store.user.last_name} </h1>

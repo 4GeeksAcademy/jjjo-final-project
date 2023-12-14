@@ -295,29 +295,37 @@ def send_email():
 
 
 
-@api.route("/user/avatar", methods=["POST"])
-def post_avatar():
-    data_file= request.files 
+# Metodo Post para enviar imagenes a la nube de cloudinary
 
+@api.route("/user/avatar", methods=["PUT"])
+@jwt_required()
+def post_avatar():
+
+    data_file = request.files 
+    user_id = get_jwt_identity()["user_id"]
     data = {
         "avatar": data_file.get("avatar")
     }
-
-    avatar= data_file.get("avatar")
-
+    
+    # print(avatar)
     result = uploader.upload(data.get("avatar"))
-
+    # print(result)
     data.update({"avatar":result.get("secure_url")})
-    data.update({"public_id_avatar":result.get("secure_url")})
+    data.update({"public_id_avatar":result.get("public_id")})
+    print(data)
     # print(result)
 
     # Llamamos a la tabla user y guardamos los datos del avatar
-
-    user = User(avatar = data.get("avatar"), public_id_avatar = data.get("public_id_avatar"))
+    user = User.query.get(user_id)
+    print(user)
+    # user = User(avatar = data.get("avatar"), public_id_avatar = data.get("public_id_avatar"))
+    user.avatar = data.get("avatar")
+    user.public_id_avatar = data.get("public_id_avatar")
     try:
-        db.session.add(user)
         db.session.commit()
         return jsonify({"Message":"Avatar uploaded successfully"}), 201
     except Exception as error:
         print(error)
         return jsonify({"Message":"Image upload failed"}), 500  
+    
+
