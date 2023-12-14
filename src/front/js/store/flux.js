@@ -180,7 +180,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 					let response = await fetch(`${process.env.BACKEND_URL}/subject/${id}`)
 					let data = await response.json()
-					console.log(response)
+					// console.log(response)
 
 					setStore({
 						teachers: data
