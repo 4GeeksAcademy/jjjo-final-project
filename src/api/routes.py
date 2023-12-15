@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Favorites, Subject
+from api.models import db, User, Favorites, Subject, Favorites_subject
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -15,6 +15,7 @@ import smtplib , ssl
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import cloudinary.uploader as uploader 
+
 
 api = Blueprint('api', __name__)
 
@@ -47,6 +48,7 @@ def handle_hello():
 #         user_list.append(item.serialize())
 #     return jsonify(user_list), 200 
 
+# Endpoint para traer la informacion de un usuario en linea
 @api.route ('/user', methods=['GET'])
 @jwt_required()
 def get_user():
@@ -58,6 +60,7 @@ def get_user():
         return ({"message": "user doesn't exist"})
     return jsonify((user.serialize())), 200
 
+### Endpoint para crear un usuario 
 @api.route('/signup', methods=['POST'])
 def signup(): #Capaz poner un nombre mas intuitivo
     body = request.json
@@ -99,6 +102,7 @@ def signup(): #Capaz poner un nombre mas intuitivo
 
 @api.route('/login',methods=['POST'])
 
+## Endpoint para ingresar un usuario (crea un token)
 def login(): #Capaz poner un nombre mas intuitivo
     body = request.json
     email = body.get("email")
@@ -118,11 +122,12 @@ def login(): #Capaz poner un nombre mas intuitivo
                 return jsonify({"Message":"Datos incorrectos"}), 400
             
             
-# Un metodo get para comprobar que los favoritos del usurio se estan creando
+# Un metodo get para comprobar que los favoritos del usuario se estan creando
 @api.route ('user/favorites', methods=['GET'])
 @jwt_required()
 def get_user_favorites():
     student_id = get_jwt_identity()["user_id"]
+    print(student_id)
     if student_id is None:
         return jsonify({"Message":"This user does not exist"}), 404
     
@@ -136,6 +141,8 @@ def get_user_favorites():
     for item in favorites:
         favorites_list.append(item.serialize())
     return jsonify(favorites_list), 200
+
+
 
 
 # End point para crear favoritos
@@ -165,11 +172,11 @@ def add_favorites_users(instructor_id):
 
 
 # End point para borrar favoritos creados
-api.route ('favorites/user/<int:instructor_id>', methods=['DELETE'])
+@api.route ('favorites/<int:instructor_id>', methods=['DELETE'])
 @jwt_required()
-def delete_favorite(instructor_id, student_id):
+def delete_favorite(instructor_id):
     student_id = get_jwt_identity()["user_id"]
-    favorite = Favorites.query.filter_by(student_id=student_id, user_id=instructor_id).first()
+    favorite = Favorites.query.filter_by(student_id=student_id, instructor_id=instructor_id).first()
 
     if favorite is None:
         return jsonify({"Message":"This favorite does not exist"}), 404
@@ -177,14 +184,70 @@ def delete_favorite(instructor_id, student_id):
     try:
         db.session.delete(favorite)
         db.session.commit()
-        return jsonify({"Message":"This favorite was deleted"})
+        return jsonify({"Message":"This favorite was deleted"}), 200
     
     except Exception as error:
         db.session.rollback()
         return jsonify({"Message":f"{error}"}), 500
-    
 
-###Endpoint to populate the DB (users)
+### Endpoint para modificar la información de un usuario
+@api.route('/user',methods=['PUT'])
+@jwt_required()
+def update_user():
+
+    ## Buscamos el usuario que queremos actualizar
+    user_id = get_jwt_identity()["user_id"] ## Usuario a editar
+
+    ## Obtener la informacion del body
+    data = request.json
+
+    name = data.get("name")
+    lastname = data.get("last_name")
+    username = data.get("username",None)
+    email = data.get("email",None)
+    password = data.get("password",None)
+    description = data.get("description",None)
+    rol = data.get("rol",None)
+
+    #name = name.strip()
+
+    # Creamos una instancia del usuario
+
+    user = User.query.get(user_id)
+
+    #Verificamos que los campos no sean nulos y que no sean un string vacio
+    #Pendiente verificar por ejemplo que los campos no sea un string con uno o mas espacios! (Listo)
+  
+    if name is not None and name != "" and name.isspace() == False: 
+        user.name = name
+    if lastname is not None and lastname != "" and lastname.isspace() == False: 
+        user.last_name = lastname
+    if username is not None and username != "" and username.isspace() == False: 
+        user.username = username
+    if email is not None and email != "" and email.isspace() == False:
+        user.email = email
+    if description is not None and description !=""  and description.isspace() == False:
+        user.description = description
+    if rol is not None and rol != "" and rol.isspace() == False:
+        user.rol = rol
+
+    ## Contraseña nueva con hash y salt
+    if password is not None and password != "" and  password.isspace() == False:
+        user.password = set_password(password, user.salt)
+
+    try:
+        db.session.commit()
+        return jsonify({"message": "usuario actualizado"}), 200
+    except Exception as error:
+        db.session.rollback()
+        print(error)
+        return jsonify({"message": "Si este error persiste comuniquese con el administrador"}), 500
+    
+    
+#### Endpoints para crear datos en nuestras tablas    
+
+
+###Endpoint para crear usuarios en la base de datos (users)
 @api.route("/user-population", methods=["GET"])
 def user_population():
     with open(user_path, "r") as file:
@@ -213,7 +276,7 @@ def user_population():
         
     return jsonify("todo funciono"), 200
 
-###Endpoint to populate the DB (subjects)
+###Endpoint para crear materias en la base de datos (subjects)
 @api.route("/subject-population", methods=["GET"])
 def subject_population():
     with open(subject_path, "r") as file:
@@ -223,6 +286,7 @@ def subject_population():
             subject = Subject(
                 name=subject["name"],
                 description=subject["description"],
+                image_banner = subject["image_banner"]
             )
             db.session.add(subject)
             try:
@@ -232,6 +296,13 @@ def subject_population():
                 return jsonify("todo fallo"), 500
         
     return jsonify("todo funciono"), 200
+
+# Endpoint para traer los profesores a la vista de materias
+@api.route ('/subject/<int:subject_id>', methods=['GET'])
+def get_teachers(subject_id):
+    subject = Favorites_subject()
+    subject = subject.query.filter_by(subject_id = subject_id).all()
+    return jsonify(list(map(lambda item : item.serialize(), subject))), 200
 
 #Variables y funcion para enviar emails
 
@@ -243,7 +314,7 @@ smtp_port = os.getenv("SMTP_PORT")
 email_address = os.getenv("EMAIL_ADDRESS")
 email_password = os.getenv("EMAIL_PASSWORD")
 
-
+# Función para enviar un correo con un asunto, a un destinatario con un "body" predeterminado
 def email_function(subject, recipient, body):
     message = MIMEMultipart("alternative")
     message["Subject"] = subject
@@ -281,6 +352,7 @@ def email_function(subject, recipient, body):
         print("aqui entra el error")
         return False
   
+# Endpoint para mandar un correo al usuario introducido en el body  
 @api.route("/sendemail", methods=["POST"])
 def send_email():
     body = request.json
@@ -329,3 +401,72 @@ def post_avatar():
         return jsonify({"Message":"Image upload failed"}), 500  
     
 
+# Endpoint para agregar materias a enseñar
+
+@api.route ('subjects/<int:subject_id>', methods=['POST'])
+@jwt_required()
+def add_favorites_subjects(subject_id):
+    user_id = get_jwt_identity()["user_id"]
+    subjects = Favorites_subject.query.filter_by(user_id = user_id, subject_id = subject_id).first()
+
+    if subjects is not None:
+        return jsonify({"Message":"You already teach this subject"}), 400
+
+    add_subject = Favorites_subject(subject_id = subject_id, user_id = user_id)
+    db.session.add(add_subject)
+
+    try:
+        db.session.commit()
+        return  jsonify({"Message":"The subject was added"}), 200
+
+    except Exception as error:
+        db.session.rollback()
+        return jsonify({"Message":f"{error}"}), 500
+    
+
+# Un metodo get para traer las materias que los usuarios desean enseñar
+@api.route ('/subjects', methods=['GET'])
+@jwt_required()
+def get_user_subjects():
+    user_id = get_jwt_identity()["user_id"]
+    print(user_id)
+    if user_id is None:
+        return jsonify({"Message":"This user does not exist"}), 404
+    
+    subjects = Favorites_subject.query.filter_by(user_id = user_id).all()
+
+    if subjects is None:
+        return jsonify({"Message":"This user teaches no subjects"}), 404
+    
+    subject_list = []
+
+    for item in subjects:
+        subject_list.append(item.serialize())
+    return jsonify(subject_list), 200
+
+    # End point para borrar materias que no se desean enseñar
+@api.route ('/subjects/<int:subject_id>', methods=['DELETE'])
+@jwt_required()
+def delete_subject(subject_id):
+    user_id = get_jwt_identity()["user_id"]
+    subject = Favorites_subject.query.filter_by(subject_id = subject_id, user_id = user_id).first()
+
+    if subject is None:
+        return jsonify({"Message":"This subject does not exist"}), 404
+    
+    try:
+        db.session.delete(subject)
+        db.session.commit()
+        return jsonify({"Message":"You no longer teach this subject"}), 200
+    
+    except Exception as error:
+        db.session.rollback()
+        return jsonify({"Message":f"{error}"}), 500
+
+#End point para traer las materias a la vista privada de profesores
+
+@api.route ('/subjects/all', methods=['GET'])
+def get_subjects():
+    subject = Subject()
+    subject = subject.query.all()
+    return jsonify(list(map(lambda item : item.serialize(), subject))), 200

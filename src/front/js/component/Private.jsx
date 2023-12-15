@@ -80,8 +80,8 @@ export const Private = () => {
                             <h1 className="card-title">{store.user.name}  {store.user.last_name} </h1>
                             <h5 className="p-3 mb-2 bg-secondary text-white bg-opacity-75 rounded">Nombre de Usuario</h5>
                             <p className="card-text">{store.user.username} </p>
-                            <h5 className="p-3 mb-2 bg-secondary text-white bg-opacity-75 rounded">Correo electrónico</h5>
-                            <p className="card-text">{store.user.email}</p>
+                            <h5 className="p-3 mb-2 bg-secondary text-white bg-opacity-75 rounded">Correo electrónico - Contáctame</h5>
+                            <h3 className="card-text">{store.user.email}</h3>
                             <h5 className="p-3 mb-2 bg-secondary text-white bg-opacity-75 rounded">Un poco mas sobre mi...</h5>
                             <p className="card-text">{store.user.description}</p>
                         </div>
@@ -89,9 +89,11 @@ export const Private = () => {
                 </div>
                 <div className="card-body">
 
-
                     <p className="card-text">Una invitacion a seguir al usuario sea como estudiante o como profesor</p>
-                    <a href="#" className="btn btn-primary">Contactame (aqui iria el link para mandar un correo electronico)</a>
+                    <Link to="/user/update">
+                        <a href="#" className="btn btn-primary">Modifica tu información</a>
+                    </Link>
+
                 </div>
             </div>h
 

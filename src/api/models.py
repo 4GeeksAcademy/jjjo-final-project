@@ -49,13 +49,15 @@ class Favorites(db.Model):
         return{
             "id": self.id,
             "student_id": self.student_id,
-            "instructor_id": self.instructor_id
+            "instructor_id": self.instructor.serialize()
+            
         }   
 
 class Subject(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(30),unique=False,nullable=False)
+    name = db.Column(db.String(30),unique=False, nullable=False)
     description = db.Column(db.Text, unique=False, nullable=True) 
+    image_banner = db.Column(db.String(180), nullable=False)
     favorites_subject = db.relationship("Favorites_subject", uselist=True, backref="subject") ### relationship to pivot table to add subjects
 
     def serialize(self):
@@ -63,6 +65,7 @@ class Subject(db.Model):
             "id": self.id,
             "name": self.name,
             "description": self.description,
+            "image_banner": self.image_banner
         }   
 
 class Favorites_subject(db.Model): ##this is a pivot table 
@@ -70,3 +73,9 @@ class Favorites_subject(db.Model): ##this is a pivot table
     user_id = db.Column(db.Integer,db.ForeignKey("user.id"))
     subject_id = db.Column(db.Integer,db.ForeignKey("subject.id"))
 
+    def serialize(self):
+        return{
+            "id": self.id,
+            "user": self.user.serialize(),
+            "subject_name": self.subject.name,
+        }  
