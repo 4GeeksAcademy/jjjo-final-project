@@ -17,7 +17,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			token: localStorage.getItem("token") || null,
 			favorites: [],
 			user: {},
-			teachers: []
+			teachers: [],
+			subjects: [],
+			teach_subjects: []
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -190,11 +192,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			getTeachers: async (id) => {
 				let store = getStore()
+				console.log(id)
 				try {
 
 					let response = await fetch(`${process.env.BACKEND_URL}/subject/${id}`)
 					let data = await response.json()
-					console.log(response)
+					// console.log(response)
 
 					setStore({
 						teachers: data
@@ -205,7 +208,102 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} catch (error) {
 					console.log(error)
 				}
+			},
+
+			getTeacherSubjects: async () => {
+				let store = getStore()
+				try {
+
+					let response = await fetch(`${process.env.BACKEND_URL}/subjects`)
+					let data = await response.json()
+					console.log(response)
+
+					setStore({
+						teach_subjects: data
+					})
+
+
+
+				} catch (error) {
+					console.log(error)
+				}
+			},
+
+			// Funcion para agregar materias que el usuario desea enseñar
+
+			addSubject: async (id) => {
+				let store = getStore()
+				try {
+					console.log(id)
+					let response = await fetch(`${process.env.BACKEND_URL}/subjects/${id}`, {
+						method: 'POST',
+						headers: {
+							"Authorization": `Bearer ${store.token}`,
+							"Content-Type": "application/json"
+						},
+						body: JSON.stringify(id)
+					})
+
+					if (response.ok) {
+						alert('Materia agregado con éxito')
+						getActions().getTeacherSubjects()
+					}
+					else {
+						alert('Ya enseñas esta materia')
+					}
+					return response.status
+
+				} catch (error) {
+					console.log(error)
+				}
+
+			},
+
+
+			getAllSubjects: async () => {
+				try {
+					let store = getStore()
+					let response = await fetch(`${process.env.BACKEND_URL}/subjects/all`, {
+						method: 'GET',
+						headers: {
+							"Authorization": `Bearer ${store.token}`
+						}
+					}
+
+					)
+					let data = await response.json()
+					if (response.ok) {
+						setStore({
+							subjects: data
+						})
+					}
+
+				} catch (error) {
+					console.log(error)
+				}
+
+			},
+
+			deleteSubject: async (item) => {
+				let store = getStore()
+				try {
+					let response = await fetch(`${process.env.BACKEND_URL}/subjects/${item.id}`, {
+						method: 'DELETE',
+						headers: {
+							"Authorization": `Bearer ${store.token}`
+						}
+					}
+					)
+					if (response.ok) {
+						alert('Ya no enseñas este materia')
+						getActions().getTeacherSubjects()
+					}
+				} catch (error) {
+					console.log(error)
+				}
+
 			}
+
 		}
 	};
 };
