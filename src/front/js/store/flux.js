@@ -160,6 +160,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 				})
 				console.log(response)
+				if (response.ok){
+					getActions().getLogedUser()
+				}
 				let data = await response.json()
 				console.log(data)
 				if (response.ok) {
