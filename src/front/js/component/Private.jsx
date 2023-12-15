@@ -19,7 +19,7 @@ export const Private = () => {
             [event.target.name]: event.target.value
         })
     }
-
+    // mantiene la imagen enviada en el form de archivos
     const handleImage = (event) => {
         console.log(typeof event.target.files[0].type)
         if (event.target.files[0].type === "image/png" || "image/jpg") {
@@ -29,8 +29,8 @@ export const Private = () => {
         }
 
     }
-
-    const handleSubmit = async (event)=> {
+    // Mantiene los cambios del formulario
+    const handleSubmit = async (event) => {
         event.preventDefault()
         const formData = new FormData()
         formData.append("avatar", user.avatar)
@@ -59,15 +59,17 @@ export const Private = () => {
                     <div className="container m-3 d-flex justify-content-center">
                         <div className="d-flex flex-column">
                             <div className="">
+                                {/* cambiar estilo */}
+                                <img className="" src={store.user.avatar}></img>
                                 <form onSubmit={handleSubmit}>
-                                        <input
-                                            type="file"
-                                            placeholder="Sube tu imagen de perfil"
-                                            className="form-control"
-                                            name="avatar"
-                                            onChange={handleImage}
-                                        />
-                                  <button className="border border-primary rounded mt-2">Guarda Cambios</button>
+                                    <input
+                                        type="file"
+                                        placeholder="Sube tu imagen de perfil"
+                                        className="form-control"
+                                        name="avatar"
+                                        onChange={handleImage}
+                                    />
+                                    <button className="border border-primary rounded mt-2">Guarda Cambios</button>
                                 </form>
                             </div>
                             {/* <img src="https://picsum.photos/50/50" className=" my-profile-img d-flex justify-content-center" alt="..." />  */}
