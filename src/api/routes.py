@@ -316,9 +316,6 @@ email_password = os.getenv("EMAIL_PASSWORD")
 
 # Función para enviar un correo con un asunto, a un destinatario con un "body" predeterminado
 def email_function(subject, recipient, body):
-    # Asunto del correo (El \n es una salto de linea  de la libreria. Lo usamos para poder integrar mas parametros)
-    # Ese reply acalara en el apartado para mi de gmail
-    # message = f"Subject: {subject}\nReply-To: {recipient}\nFrom: {recipient}\nTo:{recipient}\n{message}"
     message = MIMEMultipart("alternative")
     message["Subject"] = subject
     message["From"] = email_address
@@ -342,15 +339,6 @@ def email_function(subject, recipient, body):
     #adjuntamos el código html al mensaje
     message.attach(html_mime)
     try:
-        # server = smtplib.SMTP(smtp_address, smtp_port)
-        # server.starttls()
-        # server.login("tumentorenlinea1@gmail.com", "ytirjlqnjrmnylyk")
-        # # (1er parametro es el email que envia, 2do parametro email que lo recibe y 3er parametro es el mensaje)
-        # message = message.encode('utf-8')
-        # server.sendmail(email_address,recipient, message)
-        # server.quit()
-        # print ("Se envio el mensage")
-        # return True
         print("me ejecuto en el endpoint en enviar mensaje")
         context = ssl.create_default_context()
         with smtplib.SMTP_SSL(smtp_address, smtp_port, context=context) as server:
@@ -376,6 +364,42 @@ def send_email():
     
     else:
         return jsonify("There was an error. The email was not sent"), 500
+
+
+
+# Metodo Post para enviar imagenes a la nube de cloudinary
+
+@api.route("/user/avatar", methods=["PUT"])
+@jwt_required()
+def post_avatar():
+
+    data_file = request.files 
+    user_id = get_jwt_identity()["user_id"]
+    data = {
+        "avatar": data_file.get("avatar")
+    }
+    
+    # print(avatar)
+    result = uploader.upload(data.get("avatar"))
+    # print(result)
+    data.update({"avatar":result.get("secure_url")})
+    data.update({"public_id_avatar":result.get("public_id")})
+    print(data)
+    # print(result)
+
+    # Llamamos a la tabla user y guardamos los datos del avatar
+    user = User.query.get(user_id)
+    print(user)
+    # user = User(avatar = data.get("avatar"), public_id_avatar = data.get("public_id_avatar"))
+    user.avatar = data.get("avatar")
+    user.public_id_avatar = data.get("public_id_avatar")
+    try:
+        db.session.commit()
+        return jsonify({"Message":"Avatar uploaded successfully"}), 201
+    except Exception as error:
+        print(error)
+        return jsonify({"Message":"Image upload failed"}), 500  
+    
 
 # Endpoint para agregar materias a enseñar
 

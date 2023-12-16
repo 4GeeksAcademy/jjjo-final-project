@@ -160,6 +160,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 				})
 				console.log(response)
+				if (response.ok){
+					getActions().getLogedUser()
+				}
 				let data = await response.json()
 				console.log(data)
 				if (response.ok) {
@@ -302,6 +305,24 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(error)
 				}
 
+			},
+			
+			saveUser: async (user) => {
+				let store = getStore();
+	// No es necesario pasar un header por como se maneja este formulario con la funcion formData
+				try {
+					let response = await fetch(`${process.env.BACKEND_URL}/user/avatar`, {
+						method:"PUT",
+						headers: {
+							"Authorization": `Bearer ${store.token}`
+						},
+						body:user
+					})
+					console.log(response)
+					return response.status
+				} catch (error) {
+					console.log(error)
+				}
 			}
 
 		}
