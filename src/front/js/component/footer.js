@@ -8,7 +8,7 @@ export const Footer = () => (
         <p>&copy; 2023 (Nombre de la app). Todos los derechos reservados.</p>
       </div>
       <div className="col-md-6">
-        <p className="text-right">Contáctanos: <a href="mailto:maildelaApp@gmail.com">maildelaApp@gmail.com</a></p>
+        <p className="text-right">Contáctanos: <a href="mailto:tumentorenlinea1@gmail.com">tumentorenlinea1@gmail.com</a></p>
         <p className="">Numero de contacto: +584149286826</p>
       </div>
     </div>
