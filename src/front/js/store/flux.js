@@ -160,9 +160,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 				})
 				console.log(response)
-				if (response.ok){
-					getActions().getLogedUser()
-				}
+				// if (response.ok){
+				// 	getActions().getLogedUser()
+				// }
 				let data = await response.json()
 				console.log(data)
 				if (response.ok) {
@@ -319,6 +319,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 						body:user
 					})
 					console.log(response)
+					if (response.ok){
+					getActions().getLogedUser()
+				}
 					return response.status
 				} catch (error) {
 					console.log(error)
