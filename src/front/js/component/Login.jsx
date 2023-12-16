@@ -65,7 +65,7 @@ const Login = () => {
                             value={user.password}
                             onChange={handleChange}
                         />
-                        <button className=" m-3">Login</button>
+                        <button type="submit" className="m-2 btn btn-primary"> Ingresa </button>
 
 
                     </form>
