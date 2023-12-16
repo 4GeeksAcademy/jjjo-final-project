@@ -15,7 +15,7 @@ class User(db.Model):
     username  = db.Column(db.String(20), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(200), unique=False, nullable=False)
-    avatar = db.Column(db.String(200), unique=False, nullable=True, default="https://i.pravatar.cc/300")
+    avatar = db.Column(db.String(200), unique=False, nullable=True, default="https://cdn.icon-icons.com/icons2/3298/PNG/512/ui_user_profile_avatar_person_icon_208734.png")
     public_id_avatar = db.Column(db.String(100), unique=False, nullable=True)
     salt = db.Column(db.String(200), unique=False, nullable=False)
     rol = db.Column(db.Enum(UserRol),unique=False,nullable=False, default="general")
