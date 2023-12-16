@@ -116,12 +116,12 @@ const Signup = () => {
                                 onChange={handleChange} />
                         </div>
                         {/* Check for receiving news from the page */}
-                        <div className="mb-3 form-check">
+                        {/*<div className="mb-3 form-check">
                             <input type="checkbox"
                                 className="form-check-input"
                                 id="exampleCheck1" />
                             <label className="form-check-label" for="exampleCheck1"> Quiero recibir noticias interesantes </label>
-                        </div>
+                        </div>*/}
                         <div id="emailHelp" className="form-text"> Nunca compartiremos tu información personal sin tu permiso </div>
                         <button type="submit" className="m-2 btn btn-primary"> Registrate </button>
                     </form>

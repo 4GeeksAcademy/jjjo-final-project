@@ -34,12 +34,13 @@ const Background = () => {
 
                         <div className="container">
                             <div className="d-flex justify-content-center m-3 border border-secondary m-3 p-3 ">
-                                <div className="form-check">
+                                {/*<div className="form-check">
                                     <input className="form-check-input" type="checkbox" value="" id="flexCheckIndeterminate" />
-                                    <label className="form-check-label" for="flexCheckIndeterminate">
+                                     <label className="form-check-label" for="flexCheckIndeterminate">
                                         ¿Quieres ser profesor?
-                                    </label>
-                                </div>
+                                    </label> 
+                                </div>*/}
+                                <h3>Haz click en las materias que quieres enseñar </h3>
                             </div>
                         </div>
 

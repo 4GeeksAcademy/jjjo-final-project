@@ -40,47 +40,52 @@ export const Home = () => {
           </div>
           <div className="carousel-inner">
             <div className="carousel-item active">
-              <img src="https://www.freewebheaders.com/gc-mathematics-1600x400/white-mathematical-equations-black-banner_gc-banner-1600x400_249136.jpg" className=" carousel-img d-block w-100" alt="baner de física" />
+              <img src="https://www.freewebheaders.com/gc-mathematics-1600x400/white-mathematical-equations-black-banner_gc-banner-1600x400_249136.jpg" className="carousel-img d-block w-100" alt="baner de física" />
               <div className="carousel-caption d-md-block bg-secondary p-2 text-white bg-opacity-75">
-                <Link to="/subject/2">
+                {/* <Link to="/subject/2">
                   <h5 className="text-white">Física</h5>
-                </Link>
+                </Link> */}
+                <h5 className="text-white">Física</h5>
                 <p>Todo es relativo</p>
               </div>
             </div>
             <div className="carousel-item">
-              <img src="https://www.cees-silicates.org/images/headers/Banner-630.jpg" className="d-block w-100" alt="baner de quíomica" />
+              <img src="https://www.cees-silicates.org/images/headers/Banner-630.jpg" className="carousel-img d-block w-100" alt="baner de química" />
               <div className="carousel-caption d-none d-md-block bg-secondary p-2 text-white bg-opacity-75">
-                <Link to="/subject/1">
+                {/* <Link to="/subject/1">
                   <h5 className="text-white">Química</h5>
-                </Link>
+                </Link> */}
+                <h5 className="text-white">Química</h5>
                 <p>Encuentra tu mentor de Química.</p>
               </div>
             </div>
             <div className="carousel-item">
-              <img src="https://www.biologycorner.com/wp-content/uploads/google-classroom-banner-green.png" className="d-block w-100" alt="baner de biología" />
+              <img src="https://www.biologycorner.com/wp-content/uploads/google-classroom-banner-green.png" className="carousel-img d-block w-100" alt="baner de biología" />
               <div className="carousel-caption d-none d-md-block bg-secondary p-2 text-white bg-opacity-75">
-                <Link to="/subject/3">
+                {/* <Link to="/subject/3">
                   <h5 className="text-white">Biología</h5>
-                </Link>
+                </Link> */}
+                <h5 className="text-white">Biología</h5>
                 <p>¿Olvidaste el ciclo de Krebs?</p>
               </div>
             </div>
             <div className="carousel-item">
-              <img src="https://sonomacounty.ca.gov/Ektron%20Images/uploadedImages/Sonoma/ISD/_Images/_carousel/ISD_System_Banner_750.jpg" className="d-block w-100" alt="baner de programación" />
+              <img src="https://sonomacounty.ca.gov/Ektron%20Images/uploadedImages/Sonoma/ISD/_Images/_carousel/ISD_System_Banner_750.jpg" className="carousel-img d-block w-100" alt="baner de programación" />
               <div className="carousel-caption d-none d-md-block bg-secondary p-2 text-white bg-opacity-75">
-                <Link to="/subject/4">
-                  <h5 className="text-white">Programación</h5>
-                </Link>
-                <p>Somos mejores que 4Geeks</p>
+                {/* <Link to="/subject/4">
+                  <h5 className="text-white">Programación</h5> 
+                </Link>*/}
+                <h5 className="text-white">Programación</h5>
+                <p>Aprendimos mucho en 4Geeks</p>
               </div>
             </div>
             <div className="carousel-item">
-              <img src="https://as2.ftcdn.net/v2/jpg/05/08/10/35/1000_F_508103535_BvW4uJs6MKlAVrRPSwGJ1Y36t5pw0EvD.jpg" className="d-block w-100" alt="baner de matemáticas" />
+              <img src="https://as2.ftcdn.net/v2/jpg/05/08/10/35/1000_F_508103535_BvW4uJs6MKlAVrRPSwGJ1Y36t5pw0EvD.jpg" className="carousel-img d-block w-100" alt="baner de matemáticas" />
               <div className="carousel-caption d-none d-md-block bg-secondary p-2 text-white bg-opacity-75">
-                <Link to="/subject/5">
+                {/* <Link to="/subject/5">
                   <h5 className="text-white">Matemáticas</h5>
-                </Link>
+              </Link> */}
+                <h5 className="text-white">Matemáticas</h5>
                 <p>¿Problemas con alguna ecuación?</p>
               </div>
             </div>
@@ -94,7 +99,6 @@ export const Home = () => {
             <span className="visually-hidden">Next</span>
           </button>
         </div>
-
 
 
         {/* <div id="carouselExampleControls" className=" carousel slide d-flex center" data-bs-ride="carousel">
