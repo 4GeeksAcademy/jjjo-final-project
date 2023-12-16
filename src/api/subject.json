@@ -1,0 +1,27 @@
+[
+    {
+        "name": "Matemática",
+        "description": "",
+        "image_banner": "https://as2.ftcdn.net/v2/jpg/05/08/10/35/1000_F_508103535_BvW4uJs6MKlAVrRPSwGJ1Y36t5pw0EvD.jpg"
+    },
+    {
+        "name": "Física",
+        "description": "",
+        "image_banner": "https://www.umsl.edu/degrees/bachelors/images/physics-banner.jpg"
+    },
+    {
+        "name": "Química",
+        "description": "",
+        "image_banner": "https://www.cees-silicates.org/images/headers/Banner-630.jpg"
+    },
+    {
+        "name": "Biología",
+        "description": "",
+        "image_banner": "https://www.biologycorner.com/wp-content/uploads/google-classroom-banner-green.png"
+    },
+    {
+        "name": "Programación",
+        "description": "",
+        "image_banner": "https://sonomacounty.ca.gov/Ektron%20Images/uploadedImages/Sonoma/ISD/_Images/_carousel/ISD_System_Banner_750.jpg"
+    }
+]

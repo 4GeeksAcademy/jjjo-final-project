@@ -1,3 +1,44 @@
 /* 
     General Styles used on every website (Don't Repeat Yourself)
 */
+.my-img {
+    width: 100px;
+    height: 100px;
+}
+
+.subject-img {
+    width: 100%;
+    max-height: 300px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.my-profile-img {
+    width: 450px;
+    height: 300px;
+}
+
+.carousel-img {
+    width: auto;
+    max-height: 250px;
+}
+
+.readmore-img {
+    width: auto;
+    max-height: 450px;
+}
+
+.aboutus-img {
+    max-width: 400px;
+    height: auto;
+}
+
+.about-us-text {
+    height: 300px;
+}
+.about-us-boxes {
+    border: 0.5rem outset lightgray;
+    border-radius: 12px;
+    outline-offset: 0.5rem;
+}
