@@ -40,7 +40,7 @@ def handle_hello():
 
     return jsonify(response_body), 200
 
-@api.route('/user', methods=['GET'])
+@api.route('/users', methods=['GET'])
 def get_users_list():
      users = User.query.all()
      user_list = []

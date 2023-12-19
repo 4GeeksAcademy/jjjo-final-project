@@ -40,7 +40,7 @@ const SubjectDetail = ({ item }) => {
                                         <p className=""> Contacto: {teacher.user.email}</p>
                                         {/*<Link to={`/user/{teacher.user.id}`} className="btn btn-primary"> Entra a mi perfil </Link>*/}
                                         <Link to={`/user/${teacher.user.id}`}>
-                                            <button onClick={() => actions.getUserById(teacher)} className="btn btn-primary"> Entra a mi perfil </button>
+                                            <button onClick={() => actions.getUserById(teacher.user)} className="btn btn-primary"> Entra a mi perfil </button>
                                         </Link>
                                     </div>
                                     <div className="d-flex justify-content-between">
