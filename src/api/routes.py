@@ -40,13 +40,13 @@ def handle_hello():
 
     return jsonify(response_body), 200
 
-# @api.route('/users', methods=['GET'])
-# def get_users_list():
-#     users = User.query.all()
-#     user_list = []
-#     for item in users:
-#         user_list.append(item.serialize())
-#     return jsonify(user_list), 200 
+@api.route('/users', methods=['GET'])
+def get_users_list():
+     users = User.query.all()
+     user_list = []
+     for item in users:
+         user_list.append(item.serialize())
+     return jsonify(user_list), 200 
 
 # Endpoint para traer la informacion de un usuario en linea
 @api.route ('/user', methods=['GET'])
@@ -304,6 +304,8 @@ def get_teachers(subject_id):
     subject = subject.query.filter_by(subject_id = subject_id).all()
     return jsonify(list(map(lambda item : item.serialize(), subject))), 200
 
+
+
 #Variables y funcion para enviar emails
 
 # Protocolo y puerto
@@ -470,3 +472,16 @@ def get_subjects():
     subject = Subject()
     subject = subject.query.all()
     return jsonify(list(map(lambda item : item.serialize(), subject))), 200
+
+# Endpoint para traer el detalle de cada usuario (sea estudiante o profesor)
+@api.route('/user/<int:user_id>',methods=["GET"])
+def get_user_by_id(user_id):
+    user_to_find = User.query.get(user_id)
+
+    if user_to_find is None:
+        return jsonify({"message":"No se encontro este usuario"}), 404
+    
+    user_serialized = user_to_find.serialize()
+
+    return(user_serialized, 200)
+    
