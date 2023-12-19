@@ -1,6 +1,8 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/index.css";
+import { Link } from "react-router-dom";
+
 
 const SubjectDetail = ({ item }) => {
     const { store, actions } = useContext(Context)
@@ -29,13 +31,17 @@ const SubjectDetail = ({ item }) => {
                         return (
 
 
-                            <div key={teacher.id = 1} className="card mb-3 border border-secondary " >
+                            <div key={teacher.user.id} className="card mb-3 border border-secondary " >
                                 <h3 className="card-title d-flex justify-content-center">{teacher.user?.name} {teacher.user?.last_name}</h3>
                                 <div className="card-body d-flex justify-content-between">
                                     <img className="my-img mx-2" src={teacher.user.avatar} />
                                     <div className="d-flex flex-column">
                                         <p className="card-text"> Descripción : {teacher.user?.description}</p>
                                         <p className=""> Contacto: {teacher.user.email}</p>
+                                        {/*<Link to={`/user/{teacher.user.id}`} className="btn btn-primary"> Entra a mi perfil </Link>*/}
+                                        <Link to={`/user/${teacher.user.id}`}>
+                                            <button onClick={() => actions.getUserById(teacher.user)} className="btn btn-primary"> Entra a mi perfil </button>
+                                        </Link>
                                     </div>
                                     <div className="d-flex justify-content-between">
                                         <button onClick={() => actions.addFavorite(teacher)} className="btn bg-warning"><i className="fa-solid fa-star"></i></button>

@@ -60,7 +60,7 @@ export const Home = () => {
               </div>
             </div>
             <div className="carousel-item">
-              <img src="https://www.biologycorner.com/wp-content/uploads/google-classroom-banner-green.png" className="carousel-img d-block w-100" alt="baner de biología" />
+              <img src="https://cdn.pixabay.com/photo/2015/11/02/18/32/biology-1018805_1280.jpg" className="carousel-img d-block w-100" alt="baner de biología" />
               <div className="carousel-caption d-none d-md-block bg-secondary p-2 text-white bg-opacity-75">
                 {/* <Link to="/subject/3">
                   <h5 className="text-white">Biología</h5>

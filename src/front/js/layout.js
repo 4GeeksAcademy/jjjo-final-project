@@ -11,6 +11,7 @@ import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import { Private } from "./component/Private.jsx"
 import { Subject } from "./component/Subject.jsx";
+import  UserDetail  from "./component/UserDetail.jsx";
 import Login from "./component/Login.jsx";
 import Signup from "./component/Signup.jsx";
 import Update from "./component/Update.jsx";
@@ -44,6 +45,7 @@ const Layout = () => {
                         <Route element={<Readmore />} path="/readmore" />
                         <Route element={<Aboutus />} path="/aboutus" />
                         <Route element={<Subject />} path="/:nature/:id" />
+                        <Route element={<UserDetail />} path="/user/:id" />
                         <Route element={<h1>Not found!</h1>} />
 
                     </Routes>

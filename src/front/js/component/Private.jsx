@@ -95,13 +95,7 @@ export const Private = () => {
                     </Link>
 
                 </div>
-            </div>h
-
-
-
-
-
-
+            </div>
 
         </>
     );
